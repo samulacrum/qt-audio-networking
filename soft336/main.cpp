@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include <QApplication>
+#include <QListView>
+#include "model.h"
 
 int main(int argc, char *argv[])
 {
