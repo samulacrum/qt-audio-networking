@@ -3,6 +3,8 @@
 
 #include <QtCore>
 #include <QtNetwork>
+#include <QTimer>
+#include <QBuffer>
 #include "audiooutput.h"
 
 class Client : public QObject
@@ -16,11 +18,14 @@ signals:
 public slots:
 
 private slots:
-    void readyRead();
+    void readDatagrams();
+    void test();
 
 private:
     QUdpSocket *socket;
     AudioOutput output;
+    QTimer *timer;
+    QByteArray *buffered;
 };
 
 #endif // CLIENT_H
