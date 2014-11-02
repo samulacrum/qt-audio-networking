@@ -14,5 +14,6 @@ void Client::readyRead()
         socket->readDatagram(buffer.data(), buffer.size());
 
         output.writeData(buffer);
+        qDebug() << buffer.size();
     }
 }
