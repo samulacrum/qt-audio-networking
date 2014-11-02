@@ -9,7 +9,7 @@ class Client : public QObject
 {
     Q_OBJECT
 public:
-    explicit Client(QString host, QObject *parent = 0);
+    explicit Client(QObject *parent = 0);
 
 signals:
 
