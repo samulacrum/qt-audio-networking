@@ -9,6 +9,7 @@ Client::Client(QObject *parent) : QObject(parent)
 
 void Client::readyRead()
 {
+    qDebug() << "called";
     while (socket->hasPendingDatagrams()) {
         QByteArray buffer(socket->pendingDatagramSize(), 0);
         socket->readDatagram(buffer.data(), buffer.size());
