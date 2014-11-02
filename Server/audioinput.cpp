@@ -51,6 +51,6 @@ void AudioInput::readyRead()
         data.resize(len);
         device->read(data.data(), len);
     }
-    qDebug("Sent");
+    qDebug() << data.size();
     emit dataReady(data);
 }
