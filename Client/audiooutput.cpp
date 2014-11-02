@@ -11,7 +11,7 @@ AudioOutput::AudioOutput(QObject *parent) : QObject(parent)
     format.setSampleType(QAudioFormat::UnSignedInt);
 
     audio = new QAudioOutput(format, this);
-    audio->setBufferSize(8192);
+    audio->setBufferSize(1024);
 
     device = audio->start();
 }

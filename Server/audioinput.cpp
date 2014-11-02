@@ -1,5 +1,4 @@
 #include "audioinput.h"
-#include <QTimer>
 
 AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(parent)
 {
@@ -12,13 +11,10 @@ AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(pare
     format.setSampleType(QAudioFormat::UnSignedInt);
 
     audio = new QAudioInput(devinfo, format, this);
-    audio->setBufferSize(8192);
+    audio->setBufferSize(1024);
 
     device = audio->start();
 
-    QTimer *timer = new QTimer(this);
-    //connect(timer, SIGNAL(timeout()), this, SLOT(readyRead()));
-    timer->start(250);
     connect(device, SIGNAL(readyRead()), this, SLOT(readyRead()));
 }
 
@@ -38,7 +34,7 @@ void AudioInput::readyRead()
         stream << device->read(len);
     }
 
-    emit dataReady(buffer);**/
+    emit dataReady(buffer);*/
 
     QByteArray data;
 
