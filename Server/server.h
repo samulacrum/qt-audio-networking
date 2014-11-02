@@ -8,7 +8,7 @@ class Server : public QObject
 {
     Q_OBJECT
 public:
-    explicit Server(quint16 port, QObject *parent = 0);
+    explicit Server(QObject *parent = 0);
 
 signals:
 

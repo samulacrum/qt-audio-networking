@@ -1,13 +1,11 @@
 #include "server.h"
 
-Server::Server(quint16 port, QObject *parent) : QObject(parent)
+Server::Server(QObject *parent) : QObject(parent)
 {
     socket = 0;
     server = new QTcpServer(this);
     connect(server, SIGNAL(newConnection()), this, SLOT(newConnection()));
-    server->listen(QHostAddress::Any, port);
-
-
+    server->listen(QHostAddress::Any, 8002);
 }
 
 void Server::newConnection()

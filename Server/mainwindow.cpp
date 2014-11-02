@@ -27,11 +27,9 @@ void MainWindow::on_pushButton_clicked()
 {
     QAudioDeviceInfo devinfo = ui->comboBox->itemData(ui->comboBox->currentIndex()).value<QAudioDeviceInfo>();
     input = new AudioInput(devinfo, this);
-    quint16 port = ui->lineEdit->text().toInt();
-    server = new Server(port, this);
+    server = new Server(this);
     connect(input, SIGNAL(dataReady(QByteArray)), server, SLOT(writeData(QByteArray)));
 
     ui->comboBox->setEnabled(false);
-    ui->lineEdit->setEnabled(false);
     ui->pushButton->setEnabled(false);
 }
