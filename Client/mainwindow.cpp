@@ -15,9 +15,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    QString host = ui->lineEdit->text();
-    client = new Client(host, this);
-
-    ui->lineEdit->setEnabled(false);
+    client = new Client(this);
     ui->pushButton->setEnabled(false);
 }

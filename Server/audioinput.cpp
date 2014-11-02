@@ -1,4 +1,5 @@
 #include "audioinput.h"
+#include <QTimer>
 
 AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(parent)
 {
@@ -14,15 +15,34 @@ AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(pare
     audio->setBufferSize(8192);
 
     device = audio->start();
-    connect(device, SIGNAL(readyRead()), this, SLOT(readyRead()));
+
+    QTimer *timer = new Qtimer(this);
+    connect(timer, SIGNAL(timeout()), this, slot(readyRead()));
+    timer->start(250);
+    //connect(device, SIGNAL(readyRead()), this, SLOT(readyRead()));
 }
 
 void AudioInput::readyRead()
 {
-    QByteArray data;
+    QByteArray buffer(8192, 0);
+    QDataStream stream(&buffer, QIODevice::WriteOnly);
+    stream.setVersion(QDataStream::Qt_5_3);
+
+    qint64 len = audio->bytesReady();
+
+    //Read sound samples from input device to buffer
+    if (len > 0)
+    {
+        data.resize(len);
+        device->read(stream.data(), len);
+    }
+
+    emit dataReady(buffer);
+    /*
+     * QByteArray data;
 
     //Check the number of samples in input buffer
-    qint64 len = audio->bytesReady();
+    qint64 len = audio->bytesReady(); 
 
     //Read sound samples from input device to buffer
     if (len > 0)
@@ -32,4 +52,5 @@ void AudioInput::readyRead()
     }
 
     emit dataReady(data);
+    */
 }
