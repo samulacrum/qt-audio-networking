@@ -4,7 +4,7 @@ Client::Client(QString host, quint16 port, QObject *parent) : QObject(parent)
 {
     socket = new QTcpSocket(this);
     socket->connectToHost(host, port);
-    connect(socket, SIGNAL(readyRead()), SLOT(readyRead()));
+    connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
 }
 
 void Client::readyRead()

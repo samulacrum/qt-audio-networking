@@ -4,15 +4,17 @@ Server::Server(quint16 port, QObject *parent) : QObject(parent)
 {
     socket = 0;
     server = new QTcpServer(this);
-    connect(server, SIGNAL(newConnection()), SLOT(newConnection()));
+    connect(server, SIGNAL(newConnection()), this, SLOT(newConnection()));
     server->listen(QHostAddress::Any, port);
+
+
 }
 
 void Server::newConnection()
 {
     socket = server->nextPendingConnection();
     connect(socket, SIGNAL(disconnected()), socket, SLOT(deleteLater()));
-    connect(socket, SIGNAL(destroyed()), SLOT(zeropointer()));
+    connect(socket, SIGNAL(destroyed()), this, SLOT(zeropointer()));
 }
 
 void Server::zeropointer()
