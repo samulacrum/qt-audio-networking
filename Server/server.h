@@ -16,8 +16,6 @@ public slots:
     void writeData(QByteArray data);
 
 private slots:
-    void newConnection();
-    void zeropointer();
 
 private:
     //QTcpServer *server;
