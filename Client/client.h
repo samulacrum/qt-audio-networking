@@ -19,7 +19,7 @@ private slots:
     void readyRead();
 
 private:
-    QTcpSocket *socket;
+    QUdpSocket *socket;
     AudioOutput output;
 };
 
