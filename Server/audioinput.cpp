@@ -14,7 +14,7 @@ AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(pare
     audio->setBufferSize(8192);
 
     device = audio->start();
-    connect(device, SIGNAL(readyRead()), SLOT(readyRead()));
+    connect(device, SIGNAL(readyRead()), this, SLOT(readyRead()));
 }
 
 void AudioInput::readyRead()

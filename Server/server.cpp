@@ -2,10 +2,14 @@
 
 Server::Server(QObject *parent) : QObject(parent)
 {
-    socket = 0;
+    socket = new QUdpSocket(this);
+
+
+    /*
     server = new QTcpServer(this);
     connect(server, SIGNAL(newConnection()), this, SLOT(newConnection()));
-    server->listen(QHostAddress::Any, 8002);
+    server->listen(QHostAddress::Any, 8002);*/
+
 }
 
 void Server::newConnection()
@@ -22,6 +26,9 @@ void Server::zeropointer()
 
 void Server::writeData(QByteArray data)
 {
-    if (socket)
-        socket->write(data);
+    if (socket) {
+
+        socket->writeDatagram(data, QHostAddress::Broadcast, 8002);
+        //socket->write(data);
+    }
 }

@@ -20,8 +20,8 @@ private slots:
     void zeropointer();
 
 private:
-    QTcpServer *server;
-    QTcpSocket *socket;
+    //QTcpServer *server;
+    QUdpSocket *socket;
 };
 
 #endif // SERVER_H
