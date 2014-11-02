@@ -4,8 +4,8 @@ AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(pare
 {
     QAudioFormat format;
     format.setChannelCount(1);
-    format.setSampleRate(16000);
-    format.setSampleSize(16);
+    format.setSampleRate(8000);
+    format.setSampleSize(8);
     format.setCodec("audio/pcm");
     format.setByteOrder(QAudioFormat::LittleEndian);
     format.setSampleType(QAudioFormat::UnSignedInt);
