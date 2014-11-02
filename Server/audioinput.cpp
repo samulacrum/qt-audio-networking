@@ -24,6 +24,7 @@ AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(pare
 
 void AudioInput::readyRead()
 {
+    /*
     QByteArray buffer(8192, 0);
     QDataStream stream(&buffer, QIODevice::WriteOnly);
     stream.setVersion(QDataStream::Qt_5_3);
@@ -37,9 +38,9 @@ void AudioInput::readyRead()
         stream << device->read(len);
     }
 
-    emit dataReady(buffer);
-    /*
-     * QByteArray data;
+    emit dataReady(buffer);**/
+
+    QByteArray data;
 
     //Check the number of samples in input buffer
     qint64 len = audio->bytesReady(); 
@@ -52,5 +53,4 @@ void AudioInput::readyRead()
     }
 
     emit dataReady(data);
-    */
 }
