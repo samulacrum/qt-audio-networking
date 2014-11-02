@@ -11,7 +11,7 @@ AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(pare
     format.setSampleType(QAudioFormat::SignedInt);
 
     audio = new QAudioInput(devinfo, format, this);
-    audio->setBufferSize(8192);
+    audio->setBufferSize(1024);
 
     device = audio->start();
 
