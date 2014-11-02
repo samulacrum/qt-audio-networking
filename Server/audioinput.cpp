@@ -17,9 +17,9 @@ AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(pare
     device = audio->start();
 
     QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(readyRead()));
+    //connect(timer, SIGNAL(timeout()), this, SLOT(readyRead()));
     timer->start(250);
-    //connect(device, SIGNAL(readyRead()), this, SLOT(readyRead()));
+    connect(device, SIGNAL(readyRead()), this, SLOT(readyRead()));
 }
 
 void AudioInput::readyRead()
@@ -51,6 +51,6 @@ void AudioInput::readyRead()
         data.resize(len);
         device->read(data.data(), len);
     }
-
+    qDebug("Sent");
     emit dataReady(data);
 }
