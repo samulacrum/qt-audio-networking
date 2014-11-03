@@ -2,7 +2,8 @@
 #define AUDIOINPUT_H
 
 #include <QtCore>
-#include <QtMultimedia>
+#include <QObject>
+#include <QAudioInput>
 #include "server.h"
 
 class AudioInput : public QObject

@@ -4,18 +4,23 @@ AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(pare
 {
     QAudioFormat format;
     format.setChannelCount(1);
-    format.setSampleRate(16000);
+    format.setSampleRate(8000);
     format.setSampleSize(16);
     format.setCodec("audio/pcm");
     format.setByteOrder(QAudioFormat::LittleEndian);
     format.setSampleType(QAudioFormat::SignedInt);
 
-    audio = new QAudioInput(devinfo, format, this);
-    audio->setBufferSize(1024);
+    //error checking
+    QAudioDeviceInfo info(QAudioDeviceInfo::defaultInputDevice());
+    if (!info.isFormatSupported(format)) {
+        qWarning() << "Default format not supported - trying to use nearest";
+        format = info.nearestFormat(format);
+    }
 
+    audio = new QAudioInput(devinfo, format, this);
     device = audio->start();
 
-    connect(device, SIGNAL(readyRead()), this, SLOT(readyRead()));
+    //connect(device, SIGNAL(readyRead()), this, SLOT(readyRead()));
 }
 
 void AudioInput::readyRead()
