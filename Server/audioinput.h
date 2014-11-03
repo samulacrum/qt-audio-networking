@@ -2,8 +2,7 @@
 #define AUDIOINPUT_H
 
 #include <QtCore>
-#include <QObject>
-#include <QAudioInput>
+#include <QtMultimedia>
 #include "server.h"
 
 class AudioInput : public QObject
@@ -18,13 +17,11 @@ signals:
 public slots:
 
 private slots:
-    void readAudio();
+    void readyRead();
 
 private:
     QAudioInput *audio;
     QIODevice *device;
-    QAudioFormat format;
-    QByteArray buffer;
 };
 
 #endif // AUDIOINPUT_H

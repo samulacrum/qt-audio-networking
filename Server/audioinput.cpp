@@ -1,63 +1,35 @@
 #include "audioinput.h"
 
-AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent)
-    : QObject(parent)
-    ,   buffer(4096, 0)
+AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(parent)
 {
+    QAudioFormat format;
     format.setChannelCount(1);
-    format.setSampleRate(8000);
+    format.setSampleRate(16000);
     format.setSampleSize(16);
     format.setCodec("audio/pcm");
     format.setByteOrder(QAudioFormat::LittleEndian);
     format.setSampleType(QAudioFormat::SignedInt);
 
-    //error checking
-    QAudioDeviceInfo info(QAudioDeviceInfo::defaultInputDevice());
-    if (!info.isFormatSupported(format)) {
-        qWarning() << "Default format not supported - trying to use nearest";
-        format = info.nearestFormat(format);
-    }
-
     audio = new QAudioInput(devinfo, format, this);
-    device = audio->start();
-    /*
+    audio->setBufferSize(1024);
 
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(readAudio()));
-    timer->start(10);*/
+    device = audio->start();
+
+    connect(device, SIGNAL(readyRead()), this, SLOT(readyRead()));
 }
 
-void AudioInput::readAudio()
+void AudioInput::readyRead()
 {
-    if (!audio)
-        return;
+    QByteArray data;
 
     //Check the number of samples in input buffer
-    qint64 len = audio->bytesReady();
-
-    if (len > 4096) {
-        len = 4096;
-    }
+    qint64 len = audio->bytesReady(); 
 
     //Read sound samples from input device to buffer
-    qint64 l = device->read(buffer.data(), len);
-    if (l > 0) {
-        //Assign sound samples to short array
-        short* resultingData = (short*)buffer.data();
-
-
-        short *outdata=resultingData;
-        outdata[ 0 ] = resultingData [ 0 ];
-
-        //lowpass filter
-        int iIndex;
-        for ( iIndex=1; iIndex < len; iIndex++ )
-        {
-            outdata[ iIndex ] = 0.333 * resultingData[iIndex ] + ( 1.0 - 0.333 ) * outdata[ iIndex-1 ];
-        }
-        //m_output->write((char*)outdata, len);
-        emit dataReady((char*)outdata);
+    if (len > 0) {
+        data.resize(len);
+        device->read(data.data(), len);
     }
 
-    //emit dataReady(data);
+    emit dataReady(data);
 }
