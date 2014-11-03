@@ -23,6 +23,8 @@ private slots:
 private:
     QAudioInput *audio;
     QIODevice *device;
+    QAudioFormat format;
+    QByteArray buffer;
 };
 
 #endif // AUDIOINPUT_H

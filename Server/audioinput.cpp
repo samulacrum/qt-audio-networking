@@ -1,8 +1,9 @@
 #include "audioinput.h"
 
-AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(parent)
+AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent)
+    : QObject(parent)
+    ,   buffer(4096, 0)
 {
-    QAudioFormat format;
     format.setChannelCount(1);
     format.setSampleRate(8000);
     format.setSampleSize(16);
@@ -19,26 +20,44 @@ AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(pare
 
     audio = new QAudioInput(devinfo, format, this);
     device = audio->start();
+    /*
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(readAudio()));
-    timer->start(10);
+    timer->start(10);*/
 }
 
 void AudioInput::readAudio()
 {
-    QByteArray data;
+    if (!audio)
+        return;
+
     //Check the number of samples in input buffer
-    qint64 len = audio->bytesReady(); 
+    qint64 len = audio->bytesReady();
 
-    if (len > 1024) {
-        len = 1024;
+    if (len > 4096) {
+        len = 4096;
     }
+
     //Read sound samples from input device to buffer
-    if (len > 0) {
-        data.resize(len);
-        device->read(data.data(), len);
+    qint64 l = device->read(buffer.data(), len);
+    if (l > 0) {
+        //Assign sound samples to short array
+        short* resultingData = (short*)buffer.data();
+
+
+        short *outdata=resultingData;
+        outdata[ 0 ] = resultingData [ 0 ];
+
+        //lowpass filter
+        int iIndex;
+        for ( iIndex=1; iIndex < len; iIndex++ )
+        {
+            outdata[ iIndex ] = 0.333 * resultingData[iIndex ] + ( 1.0 - 0.333 ) * outdata[ iIndex-1 ];
+        }
+        //m_output->write((char*)outdata, len);
+        emit dataReady((char*)outdata);
     }
 
-    emit dataReady(data);
+    //emit dataReady(data);
 }

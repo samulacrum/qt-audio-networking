@@ -7,9 +7,6 @@ Client::Client(QObject *parent) : QObject(parent)
     socket = new QUdpSocket(this);
     socket->bind(8002);
     connect(socket, SIGNAL(readyRead()), this, SLOT(readDatagrams()));
-
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(test()));
 }
 
 void Client::readDatagrams()
@@ -18,16 +15,16 @@ void Client::readDatagrams()
         QByteArray buffer2(socket->pendingDatagramSize(), 0);
         socket->readDatagram(buffer2.data(), buffer2.size());
 
-        //output.writeData(buffer2);
+        output.writeData(buffer2);/*
 
         qDebug() << buffer2.size();
-        if(buffered->size() < 15000) { //size of buffer
+        if(buffered->size() <= 4096) { //size of buffer
             buffered->append(buffer2);
             qDebug() << " BS:" << buffered->size();
         }
         else {
             test();
-        }
+        }*/
     }
 }
 
