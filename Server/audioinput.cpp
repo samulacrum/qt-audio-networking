@@ -11,7 +11,7 @@ AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(pare
     format.setSampleType(QAudioFormat::SignedInt);
 
     audio = new QAudioInput(devinfo, format, this);
-    audio->setBufferSize(512);
+    audio->setBufferSize(320);
     device = audio->start();
 
     connect(device, SIGNAL(readyRead()), this, SLOT(readyRead()));
@@ -24,46 +24,16 @@ void AudioInput::readyRead()
     //Check the number of samples in input buffer
     qint64 len = audio->bytesReady();
     qint64 l;
-   // qDebug() << "bytes ready:" << len;
 
-    if(len > 512)
-        len = 512;
+    if(len > 320)
+        len = 320;
 
     //Read sound samples from input device to buffer
     if (len > 0) {
         buffer.resize(len);
         l = device->read(buffer.data(), len);
-        if (l > 0)
+        if (l > 0) {
             emit dataReady(buffer);
-    }
-    /*
-
-    //Check the number of samples in input buffer
-    qint64 len = audio->bytesReady();
-
-    //Limit sample size
-    if(len > 1024)
-        len = 1024;
-    //Read sound samples from input device to buffer
-    qint64 l = device->read(buffer.data(), len);
-    if(l > 0)
-    {
-        //Assign sound samples to short array
-        short* resultingData = (short*)buffer.data();
-
-
-        short *outdata=resultingData;
-        outdata[ 0 ] = resultingData [ 0 ];
-
-        int iIndex;
-
-        //Low Pass filter
-        for ( iIndex=1; iIndex < len; iIndex++ )
-        {
-        outdata[ iIndex ] = 0.333 * resultingData[iIndex ] + ( 1.0 - 0.333 ) * outdata[ iIndex-1 ];
         }
-
-        emit dataReady((char*)outdata);
-
-    }*/
+    }
 }
