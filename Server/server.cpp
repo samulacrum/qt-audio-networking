@@ -8,6 +8,6 @@ Server::Server(QObject *parent) : QObject(parent)
 void Server::writeData(QByteArray data)
 {
     if (socket) {
-        qDebug() << socket->writeDatagram(data, QHostAddress::Broadcast, 8002);
+        qDebug() << "SENT: " << socket->writeDatagram(data, QHostAddress::Broadcast, 8002);
     }
 }
