@@ -20,16 +20,20 @@ AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(pare
     audio = new QAudioInput(devinfo, format, this);
     device = audio->start();
 
-    //connect(device, SIGNAL(readyRead()), this, SLOT(readyRead()));
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(readAudio()));
+    timer->start(10);
 }
 
-void AudioInput::readyRead()
+void AudioInput::readAudio()
 {
     QByteArray data;
-
     //Check the number of samples in input buffer
     qint64 len = audio->bytesReady(); 
 
+    if (len > 1024) {
+        len = 1024;
+    }
     //Read sound samples from input device to buffer
     if (len > 0) {
         data.resize(len);

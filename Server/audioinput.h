@@ -18,7 +18,7 @@ signals:
 public slots:
 
 private slots:
-    void readyRead();
+    void readAudio();
 
 private:
     QAudioInput *audio;

@@ -4,9 +4,7 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     setFixedSize(size());
-
     getDevInfo();
 }
 
@@ -28,6 +26,7 @@ void MainWindow::on_pushButton_clicked()
     QAudioDeviceInfo devinfo = ui->comboBox->itemData(ui->comboBox->currentIndex()).value<QAudioDeviceInfo>();
     input = new AudioInput(devinfo, this);
     server = new Server(this);
+
     connect(input, SIGNAL(dataReady(QByteArray)), server, SLOT(writeData(QByteArray)));
 
     ui->comboBox->setEnabled(false);
