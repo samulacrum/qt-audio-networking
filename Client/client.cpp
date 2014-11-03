@@ -14,7 +14,7 @@ void Client::readDatagrams()
     while (socket->hasPendingDatagrams()) {
         QByteArray buffer2(socket->pendingDatagramSize(), 0);
         socket->readDatagram(buffer2.data(), buffer2.size());
-
+        qDebug() << buffer2.size();
         output.writeData(buffer2);/*
 
         qDebug() << buffer2.size();
