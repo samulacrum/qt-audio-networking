@@ -20,18 +20,20 @@ AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(pare
 void AudioInput::readyRead()
 {
     QByteArray buffer;
-    /*
+
     //Check the number of samples in input buffer
     qint64 len = audio->bytesReady(); 
 
+    if(len > 1024)
+        len = 1024;
+
     //Read sound samples from input device to buffer
     if (len > 0) {
-        data.resize(len);
-        device->read(buffer.data(), len);
+        buffer.resize(len);
+        qDebug() << "read: " << device->read(buffer.data(), len);
+        emit dataReady(buffer);
     }
-
-    emit dataReady(buffer);
-    */
+    /*
 
     //Check the number of samples in input buffer
     qint64 len = audio->bytesReady();
@@ -58,7 +60,7 @@ void AudioInput::readyRead()
         outdata[ iIndex ] = 0.333 * resultingData[iIndex ] + ( 1.0 - 0.333 ) * outdata[ iIndex-1 ];
         }
 
-        emit dataReady(buffer);
+        emit dataReady((char*)outdata);
 
-    }
+    }*/
 }
