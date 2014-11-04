@@ -14,15 +14,14 @@ Server::Server(QObject *parent) : QObject(parent)
 void Server::writeDatagram(QByteArray data)
 {
     if (socketUDP) {
-        //QDATASTREAM TEST
         QByteArray block;
         QDataStream out(&block, QIODevice::WriteOnly);
         out.setVersion(QDataStream::Qt_5_3);
-        out << QString("test");
-        out << data; //not compressed when sent out
-        //
+        out << QString("audio");
+        out << data;
+
         //compress data before sending
-        QByteArray compressed = qCompress(block, 9);
+        QByteArray compressed = qCompress(block);
         qDebug() << "SENT: " << socketUDP->writeDatagram(compressed, QHostAddress::Broadcast, 8002) << " down from:" << data.size();
     }
 }
