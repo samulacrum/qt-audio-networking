@@ -13,13 +13,14 @@ public:
 signals:
 
 public slots:
-    void writeData(QByteArray data);
+    void writeDatagram(QByteArray data);
 
 private slots:
+    void acceptTCPConnection();
 
 private:
     QUdpSocket *socketUDP;
-    QTcpSocket  *socketTCP;
+    QTcpSocket *socketTCP;
     QTcpServer * serverTCP;
 };
 

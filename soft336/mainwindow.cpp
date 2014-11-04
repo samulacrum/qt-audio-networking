@@ -52,7 +52,7 @@ void MainWindow::on_broadcastButton_clicked()
     QAudioDeviceInfo devinfo = ui->deviceComboBox->itemData(ui->deviceComboBox->currentIndex()).value<QAudioDeviceInfo>();
     input = new AudioInput(devinfo, this);
     server = new Server(this);
-    connect(input, SIGNAL(dataReady(QByteArray)), server, SLOT(writeData(QByteArray)));
+    connect(input, SIGNAL(dataReady(QByteArray)), server, SLOT(writeDatagram(QByteArray)));
 }
 
 void MainWindow::on_stopListenButton_clicked()

@@ -3,14 +3,15 @@
 Server::Server(QObject *parent) : QObject(parent)
 {
     socketUDP = new QUdpSocket(this);
+
     socketTCP = 0;
     serverTCP = new QTcpServer(this);
-    serverTCP->listen(QHostAddress::Any, 8003);
+    serverTCP->listen(QHostAddress::Any, 8003);/*
 
-    connect(serverTCP, SIGNAL(newConnection()), this, SLOT(acceptTCPConnection()));
+    connect(serverTCP, SIGNAL(newConnection()), this, SLOT(acceptTCPConnection()));*/
 }
 
-void Server::writeData(QByteArray data)
+void Server::writeDatagram(QByteArray data)
 {
     if (socketUDP) {
         //compress data before sending
