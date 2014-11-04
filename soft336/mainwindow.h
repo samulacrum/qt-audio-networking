@@ -5,6 +5,7 @@
 #include <QtGui>
 #include <QtWidgets>
 
+#include "model.h"
 #include "client.h"
 #include "server.h"
 #include "audioinput.h"
@@ -35,6 +36,7 @@ private:
     Client  *client;
     Server *server;
     AudioInput *input;
+    ClientList clientList;
 };
 
 #endif // MAINWINDOW_H

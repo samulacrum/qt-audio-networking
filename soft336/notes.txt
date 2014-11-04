@@ -7,7 +7,21 @@ uses compression to send and receieve the audio data.
 makes use of the object hierarchy in QT, i.e. when the server or client is deleted, the associated audio
 objects are deleted automatically.
 
+makes use of the a data model for storing clients ip addresses.
+
 caveats
 =======
 
 makes use of zlib for compression, could have made use of vorbis etc.
+
+to-do
+=====
+add better buffering
+
+clean up so that audio devices don't have to be deleted and re-assigned?
+
+add volume control
+
+add a lot of error checking
+
+---- in client view, add option to view who is broadcasting, and who is listening ----

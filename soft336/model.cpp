@@ -1,19 +1,25 @@
 #include "model.h"
 
-ClientList::ClientList(QObject *parent) : QAbstractListModel(parent)
+ClientList::ClientList(QObject *parent)
+    : QAbstractListModel(parent),
+      clients()
 {
 }
 
 int ClientList::rowCount(const QModelIndex &) const
 {
-    return 2;
+    return clients.size();
 }
 
 QVariant ClientList::data(const QModelIndex &index, int role) const
 {
     if (role == Qt::DisplayRole)
     {
-        return QString("Row: %1").arg(index.row() + 1);
+        return clients.at(index.row());
     }
     return QVariant();
+}
+
+void ClientList::addClient(QString client) {
+    clients.append(client);
 }

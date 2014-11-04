@@ -3,12 +3,20 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    clientList(0)
 {
     ui->setupUi(this);
 
     setFixedSize(size()); //prevent window resizing
     getDeviceInfo(); //read available input devices
+
+    //sample data for client list
+    clientList.addClient("hello");
+    clientList.addClient("hello");
+    clientList.addClient("hello");
+
+    ui->clientListView->setModel(&clientList);
 }
 
 MainWindow::~MainWindow()
@@ -20,6 +28,9 @@ void MainWindow::on_listenButton_clicked()
 {
     ui->listenButton->setEnabled(false);
     ui->stopListenButton->setEnabled(true);
+
+    //qDebug() << clientList.rowCount();
+    //ui->clientListView->
 
     client = new Client(this);
 }
