@@ -24,7 +24,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="startCallButton">
+   <widget class="QPushButton" name="broadcastButton">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -34,10 +34,10 @@
      </rect>
     </property>
     <property name="text">
-     <string>start call</string>
+     <string>broadcast</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="endCallButton">
+   <widget class="QPushButton" name="listenButton">
     <property name="geometry">
      <rect>
       <x>280</x>
@@ -47,20 +47,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>end call</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="callInfo">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>250</y>
-      <width>251</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Not Connected</string>
+     <string>listen</string>
     </property>
    </widget>
    <widget class="QPushButton" name="muteButton">
@@ -87,6 +74,16 @@
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="deviceComboBox">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>210</y>
+      <width>151</width>
+      <height>26</height>
+     </rect>
     </property>
    </widget>
   </widget>
