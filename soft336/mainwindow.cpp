@@ -14,7 +14,11 @@ MainWindow::MainWindow(QWidget *parent) :
     //start server
     server = new Server(this);
 
-    ui->clientListView->setModel(clientList);
+    //start client
+    client = new Client(this);
+    connect(client, SIGNAL(clientBroadcastReceived(QString)), server, SLOT(appendClient(QString)));
+
+    ui->clientListView->setModel(server->clientList);
 }
 
 MainWindow::~MainWindow()
@@ -26,9 +30,7 @@ void MainWindow::on_listenButton_clicked()
 {
     ui->listenButton->setEnabled(false);
     ui->stopListenButton->setEnabled(true);
-
-    client = new Client(this);
-    connect(client, SIGNAL(clientBroadcastReceived(QString)), clientList, SLOT(appendClient(QString)));
+    client->enableListen();
 }
 
 void MainWindow::getDeviceInfo()
@@ -54,7 +56,7 @@ void MainWindow::on_stopListenButton_clicked()
 {
     ui->listenButton->setEnabled(true);
     ui->stopListenButton->setEnabled(false);
-    delete client;
+    client->disableListen();
 }
 
 void MainWindow::on_endBroadcastButton_clicked()

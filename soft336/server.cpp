@@ -3,6 +3,7 @@
 Server::Server(QObject *parent) : QObject(parent)
 {
     socketUDP = new QUdpSocket(this);
+    clientList = new ClientList(this);
 
     broadcastTimer = new QTimer(this);
     connect (broadcastTimer, SIGNAL(timeout()), this, SLOT(sendBroadcast()));
@@ -53,4 +54,9 @@ void Server::sendBroadcast() {
     QByteArray compressed = qCompress(block);
 
     qDebug() << "broadcast sent: " << socketUDP->writeDatagram(compressed, QHostAddress::Broadcast, 8002);
+}
+
+void Server::appendClient(QString client)
+{
+    clientList->appendClient(client);
 }

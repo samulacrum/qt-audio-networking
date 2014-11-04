@@ -2,6 +2,7 @@
 
 Client::Client(QObject *parent) : QObject(parent)
 {
+    listen = false;
     output = new AudioOutput(this);
     socket = new QUdpSocket(this);
     socket->bind(8002);
@@ -28,7 +29,9 @@ void Client::readDatagrams()
 
         //if we have audio data write it to the output
         if(!controlString.compare("audio")) {
-            output->writeData(audioBlock);
+            if(listen) {
+                output->writeData(audioBlock);
+            }
         }
         else if (!controlString.compare("broadcast")) {
             qDebug() << "Received broadcast from: " << senderAddress.toString();

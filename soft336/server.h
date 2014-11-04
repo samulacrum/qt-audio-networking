@@ -5,6 +5,8 @@
 #include <QtNetwork>
 #include <QTimer>
 
+#include "model.h"
+
 class Server : public QObject
 {
     Q_OBJECT
@@ -15,6 +17,7 @@ signals:
 
 public slots:
     void writeDatagram(QByteArray data);
+    void appendClient(QString client);
 
 private slots:
     //void acceptTCPConnection();
@@ -26,6 +29,9 @@ private:
     //QTcpServer *serverTCP;
     QTimer *broadcastTimer;
     //ClientList *clientList;
+
+public:
+    ClientList *clientList;
 };
 
 #endif // SERVER_H
