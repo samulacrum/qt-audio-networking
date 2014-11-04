@@ -16,6 +16,19 @@ void Client::readDatagrams()
         socket->readDatagram(buffer.data(), buffer.size(), &senderAddress);
         qDebug() << senderAddress.toString();
 
-        output.writeData(buffer);
+        //QDATASTREAM TEST
+        QByteArray audioBlock;
+        QString test;
+        QDataStream in(&buffer, QIODevice::ReadOnly);
+        in.setVersion(QDataStream::Qt_5_3);
+        in >> test >> audioBlock;
+        qDebug() << test;
+
+
+
+
+        //
+
+        output.writeData(audioBlock);
     }
 }

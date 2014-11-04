@@ -16,7 +16,7 @@ caveats
 
 makes use of zlib for compression, could have made use of vorbis etc.
 
-using both TCP and UDP caused some network issues (assumed blocking?)
+using both TCP and UDP caused some network issues (assumed blocking?) - solution to use multithreading?
 
 to-do
 =====
