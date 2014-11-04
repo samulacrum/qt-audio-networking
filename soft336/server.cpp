@@ -8,9 +8,10 @@ Server::Server(QObject *parent) : QObject(parent)
     connect (broadcastTimer, SIGNAL(timeout()), this, SLOT(sendBroadcast()));
     broadcastTimer->start(1000);
 
+    /*
     socketTCP = 0;
     serverTCP = new QTcpServer(this);
-    serverTCP->listen(QHostAddress::Any, 8003);/*
+    serverTCP->listen(QHostAddress::Any, 8003);
 
     connect(serverTCP, SIGNAL(newConnection()), this, SLOT(acceptTCPConnection()));*/
 }
@@ -26,15 +27,21 @@ void Server::writeDatagram(QByteArray data)
 
         //compress data before sending
         QByteArray compressed = qCompress(block);
-        qDebug() << "audio sent: " << socketUDP->writeDatagram(compressed, QHostAddress::Broadcast, 8002) << " down from:" << data.size();
+        //loop to send to all connected clients here
+        //for (int i = 0; i < clientList->rowCount(); i++) {
+            //qDebug() << clientList->data(clientList->index(i));
+
+        //}
+
+        qDebug() << "audio sent: " << socketUDP->writeDatagram(compressed, QHostAddress::Broadcast, 8002);
     }
 }
-
+/*
 void Server::acceptTCPConnection() {
     socketTCP = serverTCP->nextPendingConnection();
     connect(socketTCP, SIGNAL(disconnected()), socketTCP, SLOT(deleteLater()));
 }
-
+*/
 void Server::sendBroadcast() {
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);

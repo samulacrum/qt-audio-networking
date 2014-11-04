@@ -9,7 +9,7 @@ uses compression to send and receieve the audio data.
 makes use of the object hierarchy in QT, i.e. when the server or client is deleted, the associated audio
 objects are deleted automatically.
 
-makes use of the a data model for storing clients ip addresses.
+makes use of the a custom build model for storing clients ip addresses (using mode based list view).
 
 caveats
 =======

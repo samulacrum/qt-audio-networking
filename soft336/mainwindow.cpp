@@ -8,9 +8,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     clientList = new ClientList(this);
 
-    clientList->addClient("test");
     setFixedSize(size()); //prevent window resizing
     getDeviceInfo(); //read available input devices
+
+    //start server
+    server = new Server(this);
+
     ui->clientListView->setModel(clientList);
 }
 
@@ -42,12 +45,8 @@ void MainWindow::on_broadcastButton_clicked()
     ui->broadcastButton->setEnabled(false);
     ui->endBroadcastButton->setEnabled(true);
 
-        clientList->addClient("test");
-        ui->clientListView->update();
-
     QAudioDeviceInfo devinfo = ui->deviceComboBox->itemData(ui->deviceComboBox->currentIndex()).value<QAudioDeviceInfo>();
     input = new AudioInput(devinfo, this);
-    server = new Server(this);
     connect(input, SIGNAL(dataReady(QByteArray)), server, SLOT(writeDatagram(QByteArray)));
 }
 
@@ -63,5 +62,5 @@ void MainWindow::on_endBroadcastButton_clicked()
     ui->deviceComboBox->setEnabled(true);
     ui->broadcastButton->setEnabled(true);
     ui->endBroadcastButton->setEnabled(false);
-    delete server;
+    delete input;
 }

@@ -22,9 +22,10 @@ private slots:
 
 private:
     QUdpSocket *socketUDP;
-    QTcpSocket *socketTCP;
-    QTcpServer *serverTCP;
+    //QTcpSocket *socketTCP;
+    //QTcpServer *serverTCP;
     QTimer *broadcastTimer;
+    //ClientList *clientList;
 };
 
 #endif // SERVER_H

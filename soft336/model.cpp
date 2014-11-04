@@ -28,7 +28,9 @@ void ClientList::addClient(QString client)
 void ClientList::appendClient(QString clientAddress)
 {
     beginInsertRows(QModelIndex(), 0, 0);
-    //check if already added here
-    clients.append(clientAddress);
+    //check if already added
+    if(!clients.contains(clientAddress)) {
+        clients.append(clientAddress);
+    }
     endInsertRows();
 }
