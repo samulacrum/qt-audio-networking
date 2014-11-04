@@ -12,6 +12,8 @@ class Client : public QObject
     Q_OBJECT
 public:
     explicit Client(QObject *parent = 0);
+    void enableListen();
+    void disableListen();
 
 signals:
     void clientBroadcastReceived(QString clientAddress);
@@ -22,7 +24,8 @@ private slots:
 
 private:
     QUdpSocket *socket;
-    AudioOutput output;
+    AudioOutput *output;
+    bool listen;
 };
 
 #endif // CLIENT_H

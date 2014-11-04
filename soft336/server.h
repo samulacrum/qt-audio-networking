@@ -17,7 +17,7 @@ public slots:
     void writeDatagram(QByteArray data);
 
 private slots:
-    void acceptTCPConnection();
+    //void acceptTCPConnection();
     void sendBroadcast();
 
 private:
