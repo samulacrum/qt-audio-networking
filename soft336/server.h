@@ -18,7 +18,9 @@ public slots:
 private slots:
 
 private:
-    QUdpSocket *socket;
+    QUdpSocket *socketUDP;
+    QTcpSocket  *socketTCP;
+    QTcpServer * serverTCP;
 };
 
 #endif // SERVER_H

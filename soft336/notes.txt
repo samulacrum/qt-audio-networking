@@ -1,3 +1,5 @@
+allows for conference calling on a LAN, allowing all participents to hear and talk.
+
 uses high quality audio sampled at cd quality.
 
 uses low level audio reading and writing.
@@ -25,3 +27,12 @@ add volume control
 add a lot of error checking
 
 ---- in client view, add option to view who is broadcasting, and who is listening ----
+
+sync transmission information
+
+low pass filter??
+
+add port constants IE UDP_PORT = 8002, TCP_PORT = 8003
+also for buffers, bitrates, etc.?
+
+need to create some sort of list of client sockets
