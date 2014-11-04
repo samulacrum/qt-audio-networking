@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -14,9 +14,18 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    model.cpp
+    model.cpp \
+    audioinput.cpp \
+    audiooutput.cpp \
+    client.cpp \
+    server.cpp
+
 
 HEADERS  += mainwindow.h \
-    model.h
+    model.h \
+    audioinput.h \
+    audiooutput.h \
+    client.h \
+    server.h
 
 FORMS    += mainwindow.ui
