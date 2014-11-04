@@ -19,8 +19,6 @@ void Client::readDatagrams()
         QByteArray buffer(socket->pendingDatagramSize(), 0);
         socket->readDatagram(buffer.data(), buffer.size(), &senderAddress);
 
-        qDebug() << senderAddress.toString();
-
         uncompressed = qUncompress(buffer);
 
         QDataStream in(&uncompressed, QIODevice::ReadOnly);
@@ -33,10 +31,7 @@ void Client::readDatagrams()
         }
         else if (!controlString.compare("broadcast")){
             qDebug() << "Received broadcast from: " << senderAddress.toString();
-            //add IP address to list of clients?
+            emit clientBroadcastReceived(senderAddress.toString());
         }
-
-        //send
-        output.writeData(audioBlock);
     }
 }

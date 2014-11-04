@@ -36,7 +36,7 @@ private:
     Client  *client;
     Server *server;
     AudioInput *input;
-    ClientList clientList;
+    ClientList *clientList;
 };
 
 #endif // MAINWINDOW_H

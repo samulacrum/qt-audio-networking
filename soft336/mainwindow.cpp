@@ -3,20 +3,15 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    clientList(0)
+    ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    clientList = new ClientList(this);
 
+    clientList->addClient("test");
     setFixedSize(size()); //prevent window resizing
     getDeviceInfo(); //read available input devices
-
-    //sample data for client list
-    clientList.addClient("hello");
-    clientList.addClient("hello");
-    clientList.addClient("hello");
-
-    ui->clientListView->setModel(&clientList);
+    ui->clientListView->setModel(clientList);
 }
 
 MainWindow::~MainWindow()
@@ -29,10 +24,8 @@ void MainWindow::on_listenButton_clicked()
     ui->listenButton->setEnabled(false);
     ui->stopListenButton->setEnabled(true);
 
-    //qDebug() << clientList.rowCount();
-    //ui->clientListView->
-
     client = new Client(this);
+    connect(client, SIGNAL(clientBroadcastReceived(QString)), clientList, SLOT(appendClient(QString)));
 }
 
 void MainWindow::getDeviceInfo()
@@ -48,6 +41,9 @@ void MainWindow::on_broadcastButton_clicked()
     ui->deviceComboBox->setEnabled(false);
     ui->broadcastButton->setEnabled(false);
     ui->endBroadcastButton->setEnabled(true);
+
+        clientList->addClient("test");
+        ui->clientListView->update();
 
     QAudioDeviceInfo devinfo = ui->deviceComboBox->itemData(ui->deviceComboBox->currentIndex()).value<QAudioDeviceInfo>();
     input = new AudioInput(devinfo, this);

@@ -3,6 +3,7 @@
 
 #include <QtCore>
 #include <QtNetwork>
+#include <QTimer>
 
 class Server : public QObject
 {
@@ -17,11 +18,13 @@ public slots:
 
 private slots:
     void acceptTCPConnection();
+    void sendBroadcast();
 
 private:
     QUdpSocket *socketUDP;
     QTcpSocket *socketTCP;
-    QTcpServer * serverTCP;
+    QTcpServer *serverTCP;
+    QTimer *broadcastTimer;
 };
 
 #endif // SERVER_H

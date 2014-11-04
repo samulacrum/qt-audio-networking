@@ -20,6 +20,15 @@ QVariant ClientList::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void ClientList::addClient(QString client) {
-    clients.append(client);
+void ClientList::addClient(QString client)
+{
+    appendClient(client);
+}
+
+void ClientList::appendClient(QString clientAddress)
+{
+    beginInsertRows(QModelIndex(), 0, 0);
+    //check if already added here
+    clients.append(clientAddress);
+    endInsertRows();
 }

@@ -14,6 +14,8 @@ public:
     void addClient(QString client);
 private:
     QStringList clients;
+public slots:
+    void appendClient(QString clientAddress);
 };
 
 #endif // MODEL_H

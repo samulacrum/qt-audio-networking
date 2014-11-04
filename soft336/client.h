@@ -14,7 +14,7 @@ public:
     explicit Client(QObject *parent = 0);
 
 signals:
-
+    void clientBroadcastReceived(QString clientAddress);
 public slots:
 
 private slots:
