@@ -26,6 +26,10 @@ private slots:
     void on_listenButton_clicked();
     void on_broadcastButton_clicked();
 
+    void on_stopListenButton_clicked();
+
+    void on_endBroadcastButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     Client  *client;

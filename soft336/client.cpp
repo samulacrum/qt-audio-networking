@@ -10,9 +10,12 @@ Client::Client(QObject *parent) : QObject(parent)
 void Client::readDatagrams()
 {
     while (socket->hasPendingDatagrams()) {
-        QByteArray buffer2(socket->pendingDatagramSize(), 0);
-        socket->readDatagram(buffer2.data(), buffer2.size());
+        QHostAddress senderAddress;
 
-        output.writeData(buffer2);
+        QByteArray buffer(socket->pendingDatagramSize(), 0);
+        socket->readDatagram(buffer.data(), buffer.size(), &senderAddress);
+        qDebug() << senderAddress.toString();
+
+        output.writeData(buffer);
     }
 }

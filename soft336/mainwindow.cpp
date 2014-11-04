@@ -18,8 +18,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_listenButton_clicked()
 {
-    client = new Client(this);
     ui->listenButton->setEnabled(false);
+    ui->stopListenButton->setEnabled(true);
+
+    client = new Client(this);
 }
 
 void MainWindow::getDeviceInfo()
@@ -32,11 +34,27 @@ void MainWindow::getDeviceInfo()
 
 void MainWindow::on_broadcastButton_clicked()
 {
+    ui->deviceComboBox->setEnabled(false);
+    ui->broadcastButton->setEnabled(false);
+    ui->endBroadcastButton->setEnabled(true);
+
     QAudioDeviceInfo devinfo = ui->deviceComboBox->itemData(ui->deviceComboBox->currentIndex()).value<QAudioDeviceInfo>();
     input = new AudioInput(devinfo, this);
     server = new Server(this);
     connect(input, SIGNAL(dataReady(QByteArray)), server, SLOT(writeData(QByteArray)));
+}
 
-    ui->deviceComboBox->setEnabled(false);
-    ui->broadcastButton->setEnabled(false);
+void MainWindow::on_stopListenButton_clicked()
+{
+    ui->listenButton->setEnabled(true);
+    ui->stopListenButton->setEnabled(false);
+    delete client;
+}
+
+void MainWindow::on_endBroadcastButton_clicked()
+{
+    ui->deviceComboBox->setEnabled(true);
+    ui->broadcastButton->setEnabled(true);
+    ui->endBroadcastButton->setEnabled(false);
+    delete server;
 }

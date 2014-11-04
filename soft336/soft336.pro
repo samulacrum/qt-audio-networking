@@ -29,3 +29,6 @@ HEADERS  += mainwindow.h \
     server.h
 
 FORMS    += mainwindow.ui
+
+OTHER_FILES += \
+    notes.txt
