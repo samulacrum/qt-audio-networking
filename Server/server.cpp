@@ -8,7 +8,7 @@ Server::Server(QObject *parent) : QObject(parent)
 void Server::writeData(QByteArray data)
 {
     if (socket) {
-        QByteArray compressed = qCompress(data);
+        QByteArray compressed = qCompress(data, 9);
         qDebug() << "SENT: " << socket->writeDatagram(compressed, QHostAddress::Broadcast, 8002) << " down from:" << data.size();
     }
 }
