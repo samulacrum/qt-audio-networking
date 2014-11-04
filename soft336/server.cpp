@@ -22,8 +22,8 @@ void Server::writeDatagram(QByteArray data)
         out << data; //not compressed when sent out
         //
         //compress data before sending
-        QByteArray compressed = qCompress(data, 9);
-        qDebug() << "SENT: " << socketUDP->writeDatagram(block, QHostAddress::Broadcast, 8002) << " down from:" << data.size();
+        QByteArray compressed = qCompress(block, 9);
+        qDebug() << "SENT: " << socketUDP->writeDatagram(compressed, QHostAddress::Broadcast, 8002) << " down from:" << data.size();
     }
 }
 
