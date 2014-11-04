@@ -16,6 +16,5 @@ AudioOutput::AudioOutput(QObject *parent) : QObject(parent)
 
 void AudioOutput::writeData(QByteArray data)
 {
-    QByteArray uncompressed = qUncompress(data);
-    qDebug() << "wrote: " << device->write(uncompressed.data(), uncompressed.size()) << " down from: " << data.size();
+    qDebug() << "wrote: " << device->write(data.data(), data.size()) << " down from: " << data.size();
 }
