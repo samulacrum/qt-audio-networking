@@ -29,12 +29,12 @@ void Server::writeDatagram(QByteArray data)
         //compress data before sending
         QByteArray compressed = qCompress(block);
         //loop to send to all connected clients here
-        //for (int i = 0; i < clientList->rowCount(); i++) {
-            //qDebug() << clientList->data(clientList->index(i));
 
-        //}
-
-        qDebug() << "audio sent: " << socketUDP->writeDatagram(compressed, QHostAddress::Broadcast, 8002);
+        for (int i = 0; i < clientList->rowCount(); i++) {
+            QHostAddress sendTo = clientList->getAddressAt(clientList->index(i));
+            //qDebug() << "audio sent: " << socketUDP->writeDatagram(compressed, QHostAddress::Broadcast, 8002);
+            qDebug() << "audio sent: " << socketUDP->writeDatagram(compressed, sendTo, 8002) << " to: " << sendTo.toString();
+        }
     }
 }
 /*

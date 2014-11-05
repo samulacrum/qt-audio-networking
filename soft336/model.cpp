@@ -29,3 +29,8 @@ void ClientList::appendClient(QString clientAddress)
     }
     endInsertRows();
 }
+
+QHostAddress ClientList::getAddressAt(const QModelIndex &index)
+{
+    return QHostAddress(clients.at(index.row()));
+}

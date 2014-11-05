@@ -37,6 +37,4 @@ low pass filter??
 add port constants IE UDP_PORT = 8002, TCP_PORT = 8003
 also for buffers, bitrates, etc.?
 
-need to create some sort of list of client sockets
-
 need to address feedback issue when broadcasting and listening - i.e do not send to self?
