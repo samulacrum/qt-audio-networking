@@ -9,6 +9,14 @@ Server::Server(QObject *parent) : QObject(parent)
     connect (broadcastTimer, SIGNAL(timeout()), this, SLOT(sendBroadcast()));
     broadcastTimer->start(1000);
 
+    //get our IP address
+    QNetworkConfigurationManager mgr;
+    QNetworkConfiguration nconfig = mgr.defaultConfiguration();
+    QNetworkSession session ( nconfig );
+    QNetworkInterface ninter = session.interface();
+    QList<QNetworkAddressEntry> laddr = ninter.addressEntries();
+    qDebug() << "Server IP: " << laddr.at(1).ip() << endl;
+    serverIP = laddr.at(1).ip();
     /*
     socketTCP = 0;
     serverTCP = new QTcpServer(this);
@@ -32,8 +40,9 @@ void Server::writeDatagram(QByteArray data)
 
         for (int i = 0; i < clientList->rowCount(); i++) {
             QHostAddress sendTo = clientList->getAddressAt(clientList->index(i));
-            //qDebug() << "audio sent: " << socketUDP->writeDatagram(compressed, QHostAddress::Broadcast, 8002);
-            qDebug() << "audio sent: " << socketUDP->writeDatagram(compressed, sendTo, 8002) << " to: " << sendTo.toString();
+            if(sendTo != serverIP) {
+                qDebug() << "audio sent: " << socketUDP->writeDatagram(compressed, sendTo, 8002) << " to: " << sendTo.toString();
+            }
         }
     }
 }

@@ -32,6 +32,7 @@ private:
 
 public:
     ClientList *clientList;
+    QHostAddress serverIP;
 };
 
 #endif // SERVER_H
