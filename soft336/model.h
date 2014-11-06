@@ -6,6 +6,24 @@
 #include <QtNetwork>
 #include <QTimer>
 
+class ClientInfo : public QObject
+{
+    Q_OBJECT
+public:
+    ClientInfo() {}
+    ClientInfo(QObject *parent, QString clientAddress);
+    void restartTimer();
+    QString getAddress() const;
+private:
+    QTimer *timer;
+    QString address;
+private slots:
+    void timerExpired();
+signals:
+    void clientTimeout();
+};
+
+
 class ClientList : public QAbstractListModel
 {
     Q_OBJECT
@@ -15,25 +33,10 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     QHostAddress getAddressAt(const QModelIndex &index);
 private:
-    QStringList clients;
+    //QStringList clients;
+    QList<ClientInfo *> clients;
 public slots:
     void appendClient(QString clientAddress);
-};
-
-class ClientInfo : public QObject
-{
-    Q_OBJECT
-public:
-    ClientInfo(QObject *parent, QString clientAddress);
-    void restartTimer();
-    QString getAddress();
-private:
-    QTimer *timer;
-    QString address;
-private slots:
-    void timerExpired();
-signals:
-    void clientTimeout();
 };
 
 #endif // MODEL_H

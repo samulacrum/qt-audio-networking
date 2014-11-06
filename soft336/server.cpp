@@ -7,7 +7,7 @@ Server::Server(QObject *parent) : QObject(parent)
 
     broadcastTimer = new QTimer(this);
     connect (broadcastTimer, SIGNAL(timeout()), this, SLOT(sendBroadcast()));
-    broadcastTimer->start(1000);
+    broadcastTimer->start(200);
 
     //get our IP address
     QNetworkConfigurationManager mgr;
