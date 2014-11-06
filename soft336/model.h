@@ -4,6 +4,7 @@
 #include <QAbstractListModel>
 #include <QStringList>
 #include <QtNetwork>
+#include <QTimer>
 
 class ClientList : public QAbstractListModel
 {
@@ -17,6 +18,22 @@ private:
     QStringList clients;
 public slots:
     void appendClient(QString clientAddress);
+};
+
+class ClientInfo : public QObject
+{
+    Q_OBJECT
+public:
+    ClientInfo(QObject *parent, QString clientAddress);
+    void restartTimer();
+    QString getAddress();
+private:
+    QTimer *timer;
+    QString address;
+private slots:
+    void timerExpired();
+signals:
+    void clientTimeout();
 };
 
 #endif // MODEL_H

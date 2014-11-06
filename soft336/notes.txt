@@ -37,4 +37,10 @@ low pass filter??
 add port constants IE UDP_PORT = 8002, TCP_PORT = 8003
 also for buffers, bitrates, etc.?
 
-need to address feedback issue when broadcasting and listening - i.e do not send to self?
+now, need to remove clients that have disconnected??
+ -> add a timer that starts when a new client is added,
+    on timeout, deletes that client.
+    restarts everytime it receives a broadcast packet?
+
+
+create a client class that has timer and address?

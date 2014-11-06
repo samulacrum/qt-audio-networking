@@ -34,3 +34,17 @@ QHostAddress ClientList::getAddressAt(const QModelIndex &index)
 {
     return QHostAddress(clients.at(index.row()));
 }
+
+
+ClientInfo::ClientInfo(QObject *parent, QString clientAddress) : QObject(parent)
+{
+    clientAddress = clientAddress;
+    timer = new QTimer();
+    timer->start(500);
+    connect(timer, SIGNAL(timeout()), this, SLOT(timerExpired()));
+}
+
+void ClientInfo::timerExpired()
+{
+    emit clientTimeout();
+}
