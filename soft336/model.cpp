@@ -76,7 +76,7 @@ bool ClientList::hasAddress(QString address)
     QList<ClientInfo *>::iterator i;
     for (i = clients.begin(); i != clients.end(); ++i) {
         if(((*i)->getAddress() == address)) {
-            //(*i)->restartTimer();
+            (*i)->restartTimer();
             return true;
         }
     }
