@@ -38,6 +38,8 @@ private:
     QList<ClientInfo *> clients;
 public slots:
     void appendClient(QString clientAddress);
+private slots:
+    void clientTimeout();
 };
 
 #endif // MODEL_H
