@@ -25,21 +25,9 @@ QVariant ClientList::data(const QModelIndex &index, int role) const
 void ClientList::appendClient(QString clientAddress)
 {
     beginInsertRows(QModelIndex(), 0, 0);
-    //if queue is empty, add it
-    if(clients.empty()) {
+
+    if(!hasAddress(clientAddress)) {
         clients.append(new ClientInfo(this, clientAddress));
-    } else {
-        //check if already added
-        QList<ClientInfo *>::iterator i;
-        for (i = clients.begin(); i != clients.end(); ++i) { //change to dowhile
-            //if we already have that address
-            if(((*i)->getAddress() == clientAddress)) {
-                (*i)->restartTimer(); //restart it's timer
-            } else {
-                qDebug() << "Readded";
-                //clients.append(new ClientInfo(this, clientAddress));
-            }
-        }
     }
 
     //old insert code
@@ -54,6 +42,19 @@ QHostAddress ClientList::getAddressAt(const QModelIndex &index)
 {
     qDebug() << "called" << clients.at(index.row())->getAddress();
     return QHostAddress(clients.at(index.row())->getAddress());
+}
+
+//iterate through our list, return true if we find a matching address
+bool ClientList::hasAddress(QString address)
+{
+    QList<ClientInfo *>::iterator i;
+    for (i = clients.begin(); i != clients.end(); ++i) {
+        if(((*i)->getAddress() == address)) {
+            (*i)->restartTimer();
+            return true;
+        }
+    }
+    return false;
 }
 
 //Client Info

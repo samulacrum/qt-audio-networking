@@ -32,6 +32,7 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     QHostAddress getAddressAt(const QModelIndex &index);
+    bool hasAddress(QString address);
 private:
     //QStringList clients;
     QList<ClientInfo *> clients;
