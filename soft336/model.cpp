@@ -86,7 +86,6 @@ bool ClientList::hasAddress(QString address)
 void ClientList::clientTimeout()
 {
     //remove the timeout client here
-    qDebug() << QObject::sender();
     clients.removeOne((ClientInfo *)QObject::sender());
-    qDebug() << "remove client called";
+    delete QObject::sender();
 }

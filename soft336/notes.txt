@@ -4,12 +4,18 @@ uses high quality audio sampled at cd quality.
 
 uses low level audio reading and writing.
 
+achieves almost real-time communciation.
+
 uses compression to send and receieve the audio data.
 
 makes use of the object hierarchy in QT, i.e. when the server or client is deleted, the associated audio
 objects are deleted automatically.
 
 makes use of the a custom build model for storing clients ip addresses (using mode based list view).
+
+auto displays all clients on the list.
+
+allows users to select whether they want to broadcast or listen.
 
 caveats
 =======
@@ -18,11 +24,11 @@ makes use of zlib for compression, could have made use of vorbis etc.
 
 using both TCP and UDP caused some network issues (assumed blocking?) - solution to use multithreading?
 
+would have more appropriate to use RTP to stream data, but could not find any appropriate plugins to accomplish this.
+
 to-do
 =====
 add better buffering
-
-clean up so that audio devices don't have to be deleted and re-assigned?
 
 add volume control
 
@@ -37,10 +43,3 @@ low pass filter??
 add port constants IE UDP_PORT = 8002, TCP_PORT = 8003
 also for buffers, bitrates, etc.?
 
-now, need to remove clients that have disconnected??
- -> add a timer that starts when a new client is added,
-    on timeout, deletes that client.
-    restarts everytime it receives a broadcast packet?
-
-
-create a client class that has timer and address?

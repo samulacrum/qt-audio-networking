@@ -28,7 +28,6 @@ private:
     //QTcpSocket *socketTCP;
     //QTcpServer *serverTCP;
     QTimer *broadcastTimer;
-    //ClientList *clientList;
 
 public:
     ClientList *clientList;
