@@ -44,7 +44,6 @@ add a lot of error checking
 
 sync transmission information
 
-add port constants IE UDP_PORT = 8002, TCP_PORT = 8003
 also for buffers, bitrates, etc.?
 
 take another look at QLIST<T>?

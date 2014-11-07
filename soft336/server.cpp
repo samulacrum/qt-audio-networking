@@ -88,3 +88,8 @@ void Server::endAudioSend()
 {
     delete input;
 }
+
+void Server::setVolume(float volume)
+{
+    input->setVolume(volume);
+}

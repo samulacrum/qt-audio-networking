@@ -9,6 +9,7 @@
 #include "audioinput.h"
 #include "model.h"
 
+#define UDP_PORT 8002
 
 class Server : public QObject
 {
@@ -17,6 +18,7 @@ public:
     explicit Server(QAudioDeviceInfo devinfo, QObject *parent = 0);
     void startAudioSend();
     void endAudioSend();
+    void setVolume(float volume);
 
 signals:
 

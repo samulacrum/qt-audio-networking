@@ -15,6 +15,7 @@ public:
     explicit Client(QObject *parent = 0);
     void startListen();
     void endListen();
+    void setVolume(float volume);
 
 signals:
     void clientBroadcastReceived(QString clientAddress);

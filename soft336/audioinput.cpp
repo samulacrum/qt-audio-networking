@@ -37,3 +37,9 @@ void AudioInput::readyRead()
         }
     }
 }
+
+void AudioInput::setVolume(float volume)
+{
+    audio->setVolume(volume);
+}
+

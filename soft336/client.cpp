@@ -49,3 +49,9 @@ void Client::startListen()
 {
     listen = true;
 }
+
+void Client::setVolume(float volume)
+{
+    output->setVolume(volume);
+}
+

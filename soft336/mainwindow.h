@@ -25,17 +25,15 @@ private slots:
     void getDeviceInfo();
     void on_listenButton_clicked();
     void on_broadcastButton_clicked();
-
     void on_stopListenButton_clicked();
-
     void on_endBroadcastButton_clicked();
+    void on_outputVolumeControl_sliderMoved(int position);
+    void on_inputVolumeControl_sliderMoved(int position);
 
 private:
     Ui::MainWindow *ui;
     Client  *client;
     Server *server;
-    //AudioInput *input;
-    //ClientList *clientList;
 };
 
 #endif // MAINWINDOW_H

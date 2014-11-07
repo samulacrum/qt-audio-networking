@@ -66,3 +66,16 @@ void MainWindow::on_endBroadcastButton_clicked()
 
     server->endAudioSend();
 }
+
+
+void MainWindow::on_outputVolumeControl_sliderMoved(int position)
+{
+    client->setVolume((float)position / 10);
+}
+
+
+
+void MainWindow::on_inputVolumeControl_sliderMoved(int position)
+{
+    server->setVolume((float)position / 10);
+}
