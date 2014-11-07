@@ -39,6 +39,10 @@ using both TCP and UDP caused some network issues (assumed blocking?) - solution
 
 would have more appropriate to use RTP to stream data, but could not find any appropriate plugins to accomplish this.
 
+makes use of network manager as a quick way to get the server IP address. Upon reading about this class, it would
+have made more sense to use this for the client and server functionality, as it asyncochronous by default (it was unclear
+whether the instances of UDP client, etc. where asyncochronous or not; the documentation was not consistent in this regard).
+
 to-do
 =====
 
@@ -51,4 +55,3 @@ add a lot of error checking
 write documentation, using doxygen.
 
 //option to change audio input needs to addressed!!
-//FIX QTHREAD

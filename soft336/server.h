@@ -15,10 +15,11 @@ class Server : public QObject
 {
     Q_OBJECT
 public:
-    explicit Server(QAudioDeviceInfo devinfo, QObject *parent = 0);
+    explicit Server(QObject *parent = 0);
     void startAudioSend();
     void endAudioSend();
     void setVolume(float volume);
+    void changeDevice(QAudioDeviceInfo devinfo);
 
 signals:
 

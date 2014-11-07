@@ -1,6 +1,6 @@
 #include "server.h"
 
-Server::Server(QAudioDeviceInfo devinfo, QObject *parent) : QObject(parent)
+Server::Server(QObject *parent) : QObject(parent)
 {
     //iniate udp server and client list
     socketUDP = new QUdpSocket(this);
@@ -10,9 +10,6 @@ Server::Server(QAudioDeviceInfo devinfo, QObject *parent) : QObject(parent)
     broadcastTimer = new QTimer(this);
     connect (broadcastTimer, SIGNAL(timeout()), this, SLOT(sendBroadcast()));
     broadcastTimer->start(200);
-
-    //assign devinfo
-    this->devinfo = devinfo;
 
     //get our IP address
     QNetworkConfigurationManager mgr;
@@ -92,4 +89,9 @@ void Server::endAudioSend()
 void Server::setVolume(float volume)
 {
     input->setVolume(volume);
+}
+
+void Server::changeDevice(QAudioDeviceInfo devinfo)
+{
+    this->devinfo = devinfo;
 }

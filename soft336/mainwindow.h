@@ -31,6 +31,8 @@ private slots:
     void on_outputVolumeControl_sliderMoved(int position);
     void on_inputVolumeControl_sliderMoved(int position);
 
+    void on_deviceComboBox_currentIndexChanged(int index);
+
 private:
     Ui::MainWindow *ui;
     Client  *client;

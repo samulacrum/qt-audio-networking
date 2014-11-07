@@ -14,19 +14,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //start server
     QAudioDeviceInfo devinfo = ui->deviceComboBox->itemData(ui->deviceComboBox->currentIndex()).value<QAudioDeviceInfo>();
-    server = new Server(devinfo);
+    server = new Server();
 
     //start client
     client = new Client();
     connect(client, SIGNAL(clientBroadcastReceived(QString)), server, SLOT(appendClient(QString)));
 
+    //move them to seperate threads
     server->moveToThread(serverThread);
     client->moveToThread(clientThread);
 
     serverThread->start();
     clientThread->start();
 
-    //ui->clientListView->setModel(server->clientList);
+    server->changeDevice(devinfo);
+
+    //finally, set the model for the table view
     ui->clientListTableView->setModel(server->clientList);
 }
 
@@ -55,7 +58,6 @@ void MainWindow::on_broadcastButton_clicked()
     ui->deviceComboBox->setEnabled(false);
     ui->broadcastButton->setEnabled(false);
     ui->endBroadcastButton->setEnabled(true);
-
     server->startAudioSend();
 }
 
@@ -71,19 +73,24 @@ void MainWindow::on_endBroadcastButton_clicked()
     ui->deviceComboBox->setEnabled(true);
     ui->broadcastButton->setEnabled(true);
     ui->endBroadcastButton->setEnabled(false);
-
     server->endAudioSend();
 }
-
 
 void MainWindow::on_outputVolumeControl_sliderMoved(int position)
 {
     client->setVolume((float)position / 10);
 }
 
-
-
 void MainWindow::on_inputVolumeControl_sliderMoved(int position)
 {
     server->setVolume((float)position / 10);
+}
+
+
+void MainWindow::on_deviceComboBox_currentIndexChanged(int index)
+{
+    /*
+    Q_UNUSED(index);
+    QAudioDeviceInfo devinfo = ui->deviceComboBox->itemData(ui->deviceComboBox->currentIndex()).value<QAudioDeviceInfo>();
+    server->changeDevice(devinfo);*/
 }
