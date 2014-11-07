@@ -96,7 +96,6 @@ bool ClientList::hasAddress(QString address)
 
 void ClientList::clientTimeout()
 {
-    //BEGIN MOVE ROWS NEEDS TO BE HERE!!!
     //remove the timeout client here
     qDebug("Client Removed");
     clients.removeOne((ClientInfo *)QObject::sender());
