@@ -35,8 +35,8 @@ private:
     Ui::MainWindow *ui;
     Client  *client;
     Server *server;
-    AudioInput *input;
-    ClientList *clientList;
+    //AudioInput *input;
+    //ClientList *clientList;
 };
 
 #endif // MAINWINDOW_H
