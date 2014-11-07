@@ -3,7 +3,6 @@
 
 #include <QtCore>
 #include <QtMultimedia>
-#include "server.h"
 
 class AudioInput : public QObject
 {

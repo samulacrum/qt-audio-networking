@@ -12,7 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
     getDeviceInfo(); //read available input devices
 
     //start server
-    server = new Server(this);
+    QAudioDeviceInfo devinfo = ui->deviceComboBox->itemData(ui->deviceComboBox->currentIndex()).value<QAudioDeviceInfo>();
+    server = new Server(devinfo, this);
 
     //start client
     client = new Client(this);
@@ -47,9 +48,9 @@ void MainWindow::on_broadcastButton_clicked()
     ui->broadcastButton->setEnabled(false);
     ui->endBroadcastButton->setEnabled(true);
 
-    QAudioDeviceInfo devinfo = ui->deviceComboBox->itemData(ui->deviceComboBox->currentIndex()).value<QAudioDeviceInfo>();
-    input = new AudioInput(devinfo, this);
-    connect(input, SIGNAL(dataReady(QByteArray)), server, SLOT(writeDatagram(QByteArray)));
+    //QAudioDeviceInfo devinfo = ui->deviceComboBox->itemData(ui->deviceComboBox->currentIndex()).value<QAudioDeviceInfo>();
+    //input = new AudioInput(devinfo, this);
+    //connect(input, SIGNAL(dataReady(QByteArray)), server, SLOT(writeDatagram(QByteArray)));
 }
 
 void MainWindow::on_stopListenButton_clicked()
@@ -64,5 +65,5 @@ void MainWindow::on_endBroadcastButton_clicked()
     ui->deviceComboBox->setEnabled(true);
     ui->broadcastButton->setEnabled(true);
     ui->endBroadcastButton->setEnabled(false);
-    delete input;
+    //delete input;
 }

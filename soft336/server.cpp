@@ -1,10 +1,16 @@
 #include "server.h"
 
-Server::Server(QObject *parent) : QObject(parent)
+Server::Server(QAudioDeviceInfo devinfo, QObject *parent) : QObject(parent)
 {
+    //iniate udp server and client list
     socketUDP = new QUdpSocket(this);
     clientList = new ClientList(this);
 
+    //initiate audio device
+    input = new AudioInput(devinfo, this);
+    connect(input, SIGNAL(dataReady(QByteArray)), this, SLOT(writeDatagram(QByteArray)));
+
+    //initiate the broadcast timer
     broadcastTimer = new QTimer(this);
     connect (broadcastTimer, SIGNAL(timeout()), this, SLOT(sendBroadcast()));
     broadcastTimer->start(200);
@@ -17,6 +23,7 @@ Server::Server(QObject *parent) : QObject(parent)
     QList<QNetworkAddressEntry> laddr = ninter.addressEntries();
     qDebug() << "Server IP: " << laddr.at(1).ip() << endl;
     serverIP = laddr.at(1).ip();
+
     /*
     socketTCP = 0;
     serverTCP = new QTcpServer(this);
@@ -28,37 +35,7 @@ Server::Server(QObject *parent) : QObject(parent)
 void Server::writeDatagram(QByteArray data)
 {
     if (socketUDP) {
-        //lowpass test
-        /*
-         * //Assign sound samples to short array
-        short* resultingData = (short*)m_buffer.data();
-
-
-        short *outdata=resultingData;
-        outdata[ 0 ] = resultingData [ 0 ];
-
-         int iIndex;
-         if(ui->chkRemoveNoise->checkState() == Qt::Checked)
-         {
-                //Remove noise using Low Pass filter algortm[Simple algorithm used to remove noise]
-                for ( iIndex=1; iIndex < len; iIndex++ )
-                {
-                    outdata[ iIndex ] = 0.333 * resultingData[iIndex ] + ( 1.0 - 0.333 ) * outdata[ iIndex-1 ];
-                }
-          }
-
-         for ( iIndex=0; iIndex < len; iIndex++ )
-         {
-             //Cange volume to each integer data in a sample
-             outdata[ iIndex ] = ApplyVolumeToSample( outdata[ iIndex ]);
-         }
-
-         //write modified sond sample to outputdevice for playback audio
-          m_output->write((char*)outdata, len);
-          */
-        //end lowpass test
-
-
+        //package data into a data stream
         QByteArray block;
         QDataStream out(&block, QIODevice::WriteOnly);
         out.setVersion(QDataStream::Qt_5_3);

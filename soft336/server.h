@@ -3,15 +3,18 @@
 
 #include <QtCore>
 #include <QtNetwork>
+#include <QtMultimedia>
 #include <QTimer>
 
+#include "audioinput.h"
 #include "model.h"
+
 
 class Server : public QObject
 {
     Q_OBJECT
 public:
-    explicit Server(QObject *parent = 0);
+    explicit Server(QAudioDeviceInfo devinfo, QObject *parent = 0);
 
 signals:
 
@@ -32,6 +35,7 @@ private:
 public:
     ClientList *clientList;
     QHostAddress serverIP;
+    AudioInput *input;
 };
 
 #endif // SERVER_H

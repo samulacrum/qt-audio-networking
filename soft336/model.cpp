@@ -27,7 +27,6 @@ QString ClientInfo::getAddress() const
     return address;
 }
 
-
 //Client List
 ClientList::ClientList(QObject *parent)
     : QAbstractListModel(parent)
@@ -75,7 +74,7 @@ bool ClientList::hasAddress(QString address)
 {
     QList<ClientInfo *>::iterator i;
     for (i = clients.begin(); i != clients.end(); ++i) {
-        if(((*i)->getAddress() == address)) {
+        if((*i)->getAddress() == address) {
             (*i)->restartTimer();
             return true;
         }
