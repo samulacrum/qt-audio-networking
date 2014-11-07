@@ -15,6 +15,8 @@ class Server : public QObject
     Q_OBJECT
 public:
     explicit Server(QAudioDeviceInfo devinfo, QObject *parent = 0);
+    void startAudioSend();
+    void endAudioSend();
 
 signals:
 
@@ -36,6 +38,7 @@ public:
     ClientList *clientList;
     QHostAddress serverIP;
     AudioInput *input;
+    QAudioDeviceInfo devinfo;
 };
 
 #endif // SERVER_H

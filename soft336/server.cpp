@@ -6,14 +6,13 @@ Server::Server(QAudioDeviceInfo devinfo, QObject *parent) : QObject(parent)
     socketUDP = new QUdpSocket(this);
     clientList = new ClientList(this);
 
-    //initiate audio device
-    input = new AudioInput(devinfo, this);
-    connect(input, SIGNAL(dataReady(QByteArray)), this, SLOT(writeDatagram(QByteArray)));
-
     //initiate the broadcast timer
     broadcastTimer = new QTimer(this);
     connect (broadcastTimer, SIGNAL(timeout()), this, SLOT(sendBroadcast()));
     broadcastTimer->start(200);
+
+    //assign devinfo
+    this->devinfo = devinfo;
 
     //get our IP address
     QNetworkConfigurationManager mgr;
@@ -76,4 +75,16 @@ void Server::sendBroadcast() {
 void Server::appendClient(QString client)
 {
     clientList->appendClient(client);
+}
+
+void Server::startAudioSend()
+{
+    //initiate audio device
+    input = new AudioInput(devinfo, this);
+    connect(input, SIGNAL(dataReady(QByteArray)), this, SLOT(writeDatagram(QByteArray)));
+}
+
+void Server::endAudioSend()
+{
+    delete input;
 }

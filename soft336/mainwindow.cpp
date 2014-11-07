@@ -48,6 +48,8 @@ void MainWindow::on_broadcastButton_clicked()
     ui->broadcastButton->setEnabled(false);
     ui->endBroadcastButton->setEnabled(true);
 
+    server->startAudioSend();
+
     //QAudioDeviceInfo devinfo = ui->deviceComboBox->itemData(ui->deviceComboBox->currentIndex()).value<QAudioDeviceInfo>();
     //input = new AudioInput(devinfo, this);
     //connect(input, SIGNAL(dataReady(QByteArray)), server, SLOT(writeDatagram(QByteArray)));
@@ -65,5 +67,6 @@ void MainWindow::on_endBroadcastButton_clicked()
     ui->deviceComboBox->setEnabled(true);
     ui->broadcastButton->setEnabled(true);
     ui->endBroadcastButton->setEnabled(false);
-    //delete input;
+
+    server->endAudioSend();
 }
