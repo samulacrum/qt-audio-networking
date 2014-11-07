@@ -24,6 +24,7 @@ auto displays all clients on the list.
 allows users to select whether they want to broadcast or listen.
 
 solution loosely based on the audio examples provided by QT, networking based off official documentation.
+model is based from the model view tutorial.
 
 uses QTs datastream to serialise the audio information.
 
@@ -48,3 +49,6 @@ sync transmission information?
 take another look at QLIST<T>
 add a lot of error checking
 write documentation, using doxygen.
+
+//option to change audio input needs to addressed!!
+//FIX QTHREAD

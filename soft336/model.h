@@ -1,7 +1,8 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include <QAbstractListModel>
+#include <QAbstractListModel> //remove
+#include <QAbstractTableModel>
 #include <QtNetwork>
 #include <QTimer>
 
@@ -23,17 +24,17 @@ signals:
 };
 
 
-class ClientList : public QAbstractListModel
+class ClientList : public QAbstractTableModel
 {
     Q_OBJECT
 public:
     ClientList(QObject *parent);
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    int rowCount(const QModelIndex &parent) const;
+    int columnCount(const QModelIndex &parent) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     QHostAddress getAddressAt(const QModelIndex &index);
     bool hasAddress(QString address);
 private:
-    //QStringList clients;
     QList<ClientInfo *> clients;
 public slots:
     void appendClient(QString clientAddress);

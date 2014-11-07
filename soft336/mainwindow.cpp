@@ -6,7 +6,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    //clientList = new ClientList(this);
 
     setFixedSize(size()); //prevent window resizing
     getDeviceInfo(); //read available input devices
@@ -28,7 +27,8 @@ MainWindow::MainWindow(QWidget *parent) :
     serverThread.start();
     clientThread.start();
 
-    ui->clientListView->setModel(server->clientList);
+    //ui->clientListView->setModel(server->clientList);
+    ui->clientListTableView->setModel(server->clientList);
 }
 
 MainWindow::~MainWindow()

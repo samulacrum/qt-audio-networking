@@ -1,6 +1,10 @@
 #include "model.h"
 
-//Client Info
+/**
+ * @brief ClientInfo::ClientInfo
+ * @param parent
+ * @param clientAddress
+ */
 ClientInfo::ClientInfo(QObject *parent, QString clientAddress) : QObject(parent)
 {
     qDebug() << "Client Created";
@@ -27,9 +31,13 @@ QString ClientInfo::getAddress() const
     return address;
 }
 
-//Client List
+/**
+ * @brief ClientList::ClientList
+ * @param parent
+ */
 ClientList::ClientList(QObject *parent)
-    : QAbstractListModel(parent)
+//    : QAbstractListModel(parent)
+    :QAbstractTableModel(parent)
 {
     clients = QList<ClientInfo *>();
 }
@@ -37,6 +45,11 @@ ClientList::ClientList(QObject *parent)
 int ClientList::rowCount(const QModelIndex &) const
 {
     return clients.size();
+}
+
+int ClientList::columnCount(const QModelIndex &) const
+{
+    return 3;
 }
 
 QVariant ClientList::data(const QModelIndex &index, int role) const
@@ -51,16 +64,14 @@ QVariant ClientList::data(const QModelIndex &index, int role) const
 
 void ClientList::appendClient(QString clientAddress)
 {
-    beginInsertRows(QModelIndex(), 0, 0);
-
-    //if we don't already have the client in our list, add it
     if(!hasAddress(clientAddress)) {
+        qDebug("Client Added");
+        beginInsertRows(QModelIndex(), 0, 0);
         ClientInfo *newClient = new ClientInfo(this, clientAddress);
-        clients.append(newClient);
+        clients.insert(0, newClient);
         connect(newClient, SIGNAL(clientTimeout()), this, SLOT(clientTimeout()));
+        endInsertRows();
     }
-
-    endInsertRows();
 }
 
 QHostAddress ClientList::getAddressAt(const QModelIndex &index)
@@ -72,6 +83,7 @@ QHostAddress ClientList::getAddressAt(const QModelIndex &index)
 //iterate through our list, return true if we find a matching address
 bool ClientList::hasAddress(QString address)
 {
+    qDebug() << clients.size();
     QList<ClientInfo *>::iterator i;
     for (i = clients.begin(); i != clients.end(); ++i) {
         if((*i)->getAddress() == address) {
@@ -84,7 +96,9 @@ bool ClientList::hasAddress(QString address)
 
 void ClientList::clientTimeout()
 {
+    //BEGIN MOVE ROWS NEEDS TO BE HERE!!!
     //remove the timeout client here
+    qDebug("Client Removed");
     clients.removeOne((ClientInfo *)QObject::sender());
     delete QObject::sender();
 }
