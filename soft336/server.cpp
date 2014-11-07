@@ -48,7 +48,7 @@ void Server::writeDatagram(QByteArray data)
         for (int i = 0; i < clientList->rowCount(); i++) {
             QHostAddress sendTo = clientList->getAddressAt(clientList->index(i));
             if(sendTo != serverIP) {
-                qDebug() << "audio sent: " << socketUDP->writeDatagram(compressed, sendTo, 8002) << " to: " << sendTo.toString();
+                qDebug() << "audio sent: " << socketUDP->writeDatagram(compressed, sendTo, UDP_PORT) << " to: " << sendTo.toString();
             }
         }
     }

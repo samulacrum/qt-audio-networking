@@ -19,7 +19,7 @@ auto displays all clients on the list.
 
 allows users to select whether they want to broadcast or listen.
 
-solution loosely based on the audio examples provided by QT.
+solution loosely based on the audio examples provided by QT, networking based off official documentation.
 
 uses QTs datastream to serialise the audio information
 

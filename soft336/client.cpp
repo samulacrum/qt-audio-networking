@@ -5,7 +5,7 @@ Client::Client(QObject *parent) : QObject(parent)
     listen = false;
     output = new AudioOutput(this);
     socket = new QUdpSocket(this);
-    socket->bind(8002);
+    socket->bind(UDP_PORT);
     connect(socket, SIGNAL(readyRead()), this, SLOT(readDatagrams()));
 }
 

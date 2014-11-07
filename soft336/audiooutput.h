@@ -5,6 +5,8 @@
 #include <QtMultimedia>
 
 #define AUDIO_BUFFER_SIZE 1024
+#define SAMPLE_RATE 44100
+#define SAMPLE_SIZE 16
 
 class AudioOutput : public QObject
 {

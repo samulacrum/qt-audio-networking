@@ -3,9 +3,10 @@
 
 #include <QtCore>
 #include <QtNetwork>
-#include <QTimer>
-#include <QBuffer>
+
 #include "audiooutput.h"
+
+#define UDP_PORT 8002
 
 class Client : public QObject
 {
