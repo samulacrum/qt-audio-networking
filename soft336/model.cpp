@@ -56,8 +56,8 @@ QVariant ClientList::data(const QModelIndex &index, int role) const
 {
     if (role == Qt::DisplayRole)
     {
-        //qDebug() << "get address called";
-        return clients.at(index.row())->getAddress();
+        if (clients.size() > 0)
+            return clients.at(index.row())->getAddress(); //problem?
     }
     return QVariant();
 }
