@@ -8,7 +8,6 @@
 #include "model.h"
 #include "client.h"
 #include "server.h"
-#include "audioinput.h"
 
 namespace Ui {
 class MainWindow;

@@ -4,6 +4,8 @@
 #include <QtCore>
 #include <QtMultimedia>
 
+#define AUDIO_BUFFER_SIZE 1024
+
 class AudioInput : public QObject
 {
     Q_OBJECT

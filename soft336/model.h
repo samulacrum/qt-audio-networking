@@ -2,7 +2,6 @@
 #define MODEL_H
 
 #include <QAbstractListModel>
-#include <QStringList>
 #include <QtNetwork>
 #include <QTimer>
 

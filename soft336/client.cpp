@@ -40,12 +40,12 @@ void Client::readDatagrams()
     }
 }
 
-void Client::disableListen()
+void Client::endListen()
 {
     listen = false;
 }
 
-void Client::enableListen()
+void Client::startListen()
 {
     listen = true;
 }

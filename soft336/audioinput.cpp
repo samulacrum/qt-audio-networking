@@ -11,7 +11,7 @@ AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(pare
     format.setSampleType(QAudioFormat::SignedInt);
 
     audio = new QAudioInput(devinfo, format, this);
-    audio->setBufferSize(1024);
+    audio->setBufferSize(AUDIO_BUFFER_SIZE);
     device = audio->start();
 
     connect(device, SIGNAL(readyRead()), this, SLOT(readyRead()));
@@ -25,8 +25,8 @@ void AudioInput::readyRead()
     qint64 len = audio->bytesReady();
     qint64 l;
 
-    if(len > 1024)
-        len = 1024;
+    if(len > AUDIO_BUFFER_SIZE)
+        len = AUDIO_BUFFER_SIZE;
 
     //Read sound samples from input device to buffer
     if (len > 0) {

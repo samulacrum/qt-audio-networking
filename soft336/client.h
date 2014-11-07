@@ -12,8 +12,8 @@ class Client : public QObject
     Q_OBJECT
 public:
     explicit Client(QObject *parent = 0);
-    void enableListen();
-    void disableListen();
+    void startListen();
+    void endListen();
 
 signals:
     void clientBroadcastReceived(QString clientAddress);

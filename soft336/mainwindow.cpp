@@ -31,7 +31,7 @@ void MainWindow::on_listenButton_clicked()
 {
     ui->listenButton->setEnabled(false);
     ui->stopListenButton->setEnabled(true);
-    client->enableListen();
+    client->startListen();
 }
 
 void MainWindow::getDeviceInfo()
@@ -49,17 +49,13 @@ void MainWindow::on_broadcastButton_clicked()
     ui->endBroadcastButton->setEnabled(true);
 
     server->startAudioSend();
-
-    //QAudioDeviceInfo devinfo = ui->deviceComboBox->itemData(ui->deviceComboBox->currentIndex()).value<QAudioDeviceInfo>();
-    //input = new AudioInput(devinfo, this);
-    //connect(input, SIGNAL(dataReady(QByteArray)), server, SLOT(writeDatagram(QByteArray)));
 }
 
 void MainWindow::on_stopListenButton_clicked()
 {
     ui->listenButton->setEnabled(true);
     ui->stopListenButton->setEnabled(false);
-    client->disableListen();
+    client->endListen();
 }
 
 void MainWindow::on_endBroadcastButton_clicked()
