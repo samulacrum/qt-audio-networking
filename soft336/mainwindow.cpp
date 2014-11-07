@@ -3,7 +3,9 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    serverThread(new QThread(this)),
+    clientThread(new QThread(this))
 {
     ui->setupUi(this);
 
@@ -12,20 +14,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //start server
     QAudioDeviceInfo devinfo = ui->deviceComboBox->itemData(ui->deviceComboBox->currentIndex()).value<QAudioDeviceInfo>();
-    server = new Server(devinfo, this);
+    server = new Server(devinfo);
 
     //start client
-    client = new Client(this);
+    client = new Client();
     connect(client, SIGNAL(clientBroadcastReceived(QString)), server, SLOT(appendClient(QString)));
 
-    QThread serverThread;
-    QThread clientThread;
+    server->moveToThread(serverThread);
+    client->moveToThread(clientThread);
 
-    server->moveToThread(&serverThread);
-    client->moveToThread(&clientThread);
-
-    serverThread.start();
-    clientThread.start();
+    serverThread->start();
+    clientThread->start();
 
     //ui->clientListView->setModel(server->clientList);
     ui->clientListTableView->setModel(server->clientList);

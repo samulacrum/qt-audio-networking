@@ -35,6 +35,9 @@ private:
     Ui::MainWindow *ui;
     Client  *client;
     Server *server;
+
+    QThread *serverThread;
+    QThread *clientThread;
 };
 
 #endif // MAINWINDOW_H

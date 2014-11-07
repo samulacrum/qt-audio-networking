@@ -1,10 +1,11 @@
 #include "client.h"
 
-Client::Client(QObject *parent) : QObject(parent)
+Client::Client(QObject *parent)
+    : QObject(parent),
+      output(new AudioOutput(this)),
+      socket(new QUdpSocket(this))
 {
     listen = false;
-    output = new AudioOutput(this);
-    socket = new QUdpSocket(this);
     socket->bind(UDP_PORT);
     connect(socket, SIGNAL(readyRead()), this, SLOT(readDatagrams()));
 }

@@ -80,7 +80,7 @@ QHostAddress ClientList::getAddressAt(const QModelIndex &index)
     return QHostAddress(clients.at(index.row())->getAddress());
 }
 
-//iterate through our list, return true if we find a matching address
+//iterate through our list, return true if we find a matching address (and restarts it's timer)
 bool ClientList::hasAddress(QString address)
 {
     qDebug() << clients.size();
@@ -94,10 +94,15 @@ bool ClientList::hasAddress(QString address)
     return false;
 }
 
+
+
 void ClientList::clientTimeout()
 {
     //remove the timeout client here
+    int loc = clients.indexOf((ClientInfo *)QObject::sender());
+    beginRemoveRows(QModelIndex(), loc, loc);
     qDebug("Client Removed");
-    clients.removeOne((ClientInfo *)QObject::sender());
-    delete QObject::sender();
+    clients.removeAt(loc);
+    delete QObject::sender(); //might not be needed?
+    endRemoveRows();
 }
