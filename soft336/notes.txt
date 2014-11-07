@@ -1,5 +1,7 @@
 allows for conference calling on a LAN, allowing all participents to hear and talk.
 
+Participants, can choose whether to talk or listen (or both).
+
 uses high quality audio sampled at cd quality.
 
 uses low level audio reading and writing.
@@ -8,7 +10,7 @@ achieves almost real-time communciation.
 
 uses compression to send and receieve the audio data.
 
-makes use of the object hierarchy in QT, i.e. when the server or client is deleted, the associated audio
+makes good use of the object hierarchy in QT, i.e. when the server or client is deleted, the associated audio
 objects are deleted automatically.
 
 makes use of the a custom build model for storing clients ip addresses (using mode based list view).
