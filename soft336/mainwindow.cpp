@@ -19,6 +19,15 @@ MainWindow::MainWindow(QWidget *parent) :
     client = new Client(this);
     connect(client, SIGNAL(clientBroadcastReceived(QString)), server, SLOT(appendClient(QString)));
 
+    QThread serverThread;
+    QThread clientThread;
+
+    server->moveToThread(&serverThread);
+    client->moveToThread(&clientThread);
+
+    serverThread.start();
+    clientThread.start();
+
     ui->clientListView->setModel(server->clientList);
 }
 

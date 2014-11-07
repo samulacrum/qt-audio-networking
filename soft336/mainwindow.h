@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QtGui>
 #include <QtWidgets>
+#include <QThread>
 
 #include "model.h"
 #include "client.h"

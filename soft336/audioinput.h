@@ -8,7 +8,7 @@
 #define SAMPLE_RATE 44100
 #define SAMPLE_SIZE 16
 
-#define MAX_AMPLITUDE 32768
+//#define MAX_AMPLITUDE 32768
 
 class AudioInput : public QObject
 {

@@ -32,6 +32,7 @@ void AudioInput::readyRead()
     if (len > 0) {
         buffer.resize(len);
         l = device->read(buffer.data(), len);
+        //ensures we only send data if there is actual data to send
         if (l > 0) {
             emit dataReady(buffer);
         }

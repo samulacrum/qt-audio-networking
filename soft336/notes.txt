@@ -1,10 +1,12 @@
 allows for conference calling on a LAN, allowing all participents to hear and talk.
 
+allows for volume control of both input and output.
+
 Participants, can choose whether to talk or listen (or both).
 
 uses high quality audio sampled at cd quality.
 
-uses low level audio reading and writing.
+uses low level audio reading and writing in pull mode (lower latency).
 
 achieves almost real-time communciation.
 
@@ -12,6 +14,8 @@ uses compression to send and receieve the audio data.
 
 makes good use of the object hierarchy in QT, i.e. when the server or client is deleted, the associated audio
 objects are deleted automatically.
+
+well modularized code, split up into seperate classes etc.
 
 makes use of the a custom build model for storing clients ip addresses (using mode based list view).
 
@@ -21,7 +25,9 @@ allows users to select whether they want to broadcast or listen.
 
 solution loosely based on the audio examples provided by QT, networking based off official documentation.
 
-uses QTs datastream to serialise the audio information
+uses QTs datastream to serialise the audio information.
+
+Phonon was considered, but deemed inappropriate, and instead uses QTMultimedia librarys.
 
 caveats
 =======
@@ -34,16 +40,11 @@ would have more appropriate to use RTP to stream data, but could not find any ap
 
 to-do
 =====
+
 add better buffering
-
-add volume control
-
+add multithreading, and some usage of TCP????
+in client view, add option to view who is broadcasting, and who is listening VIA TCP!!
+sync transmission information?
+take another look at QLIST<T>
 add a lot of error checking
-
----- in client view, add option to view who is broadcasting, and who is listening ----
-
-sync transmission information
-
-also for buffers, bitrates, etc.?
-
-take another look at QLIST<T>?
+write documentation, using doxygen.
