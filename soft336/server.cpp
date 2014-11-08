@@ -77,7 +77,9 @@ void Server::appendClient(QString client)
 void Server::startAudioSend()
 {
     //initiate audio device
+    qDebug() << "error here?";
     input = new AudioInput(devinfo, this);
+    qDebug() << "error here?";
     connect(input, SIGNAL(dataReady(QByteArray)), this, SLOT(writeDatagram(QByteArray)));
 }
 
