@@ -16,8 +16,6 @@ class Server : public QObject
     Q_OBJECT
 public:
     explicit Server(QObject *parent = 0);
-    void startAudioSend();
-    void endAudioSend();
     void setVolume(float volume);
     void changeDevice(QAudioDeviceInfo devinfo);
 
@@ -26,6 +24,8 @@ signals:
 public slots:
     void writeDatagram(QByteArray data);
     void appendClient(QString client);
+    void startAudioSend();
+    void endAudioSend();
 
 private slots:
     //void acceptTCPConnection();

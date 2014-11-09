@@ -55,5 +55,5 @@ add a lot of error checking
 write documentation, using doxygen.
 
 //option to change audio input needs to addressed!!
--- fix network client thread child
 -- fix change device
+--find out why get address is being called so many times

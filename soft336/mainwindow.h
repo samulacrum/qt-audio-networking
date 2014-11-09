@@ -22,6 +22,10 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+signals:
+    void startAudio();
+    void endAudio();
+
 private slots:
     void getDeviceInfo();
     void on_listenButton_clicked();
