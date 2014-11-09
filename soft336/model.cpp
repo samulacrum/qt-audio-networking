@@ -13,7 +13,7 @@ ClientInfo::ClientInfo(QObject *parent, QString clientAddress) : QObject(parent)
     //start the timeout timer
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerExpired()));
-    timer->start(500);
+    timer->start(2000);
 
     //start the control string listener
     socketTCP = new QTcpSocket(this);
@@ -32,7 +32,7 @@ void ClientInfo::timerExpired()
 void ClientInfo::restartTimer()
 {
     //qDebug() << "Timer Restarted";
-    timer->start(500);
+    timer->start(2000);
 }
 
 QString ClientInfo::getAddress() const
