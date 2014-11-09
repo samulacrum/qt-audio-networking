@@ -26,6 +26,8 @@ signals:
     void startAudio();
     void endAudio();
     void deviceChanged(QAudioDeviceInfo devinfo);
+    void sendControlString(QByteArray data);
+    void endBroadcast();
 
 private slots:
     void getDeviceInfo();
@@ -41,6 +43,7 @@ private:
     Ui::MainWindow *ui;
     Client  *client;
     Server *server;
+    TCPServer *tcpserver;
 
     QThread *serverThread;
     QThread *clientThread;

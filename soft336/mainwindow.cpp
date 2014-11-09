@@ -14,14 +14,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //start server
     QAudioDeviceInfo devinfo = ui->deviceComboBox->itemData(ui->deviceComboBox->currentIndex()).value<QAudioDeviceInfo>();
-    server = new Server();
+    server = new Server(this);
     server->changeDevice(devinfo);
     connect(this, SIGNAL(startAudio()), server, SLOT(startAudioSend()));
     connect(this, SIGNAL(endAudio()), server, SLOT(endAudioSend()));
     connect(this, SIGNAL(deviceChanged(QAudioDeviceInfo)), server, SLOT(changeDevice(QAudioDeviceInfo)));
 
+    //start TCP server
+    tcpserver = new TCPServer(this);
+    connect(this, SIGNAL(sendControlString(QByteArray)), tcpserver, SLOT(sendData(QByteArray)));
+
+
     //start client
-    client = new Client();
+    client = new Client(this);
     connect(client, SIGNAL(clientBroadcastReceived(QString)), server, SLOT(appendClient(QString)));
 
     //move them to seperate threads
@@ -44,6 +49,7 @@ void MainWindow::on_listenButton_clicked()
 {
     ui->listenButton->setEnabled(false);
     ui->stopListenButton->setEnabled(true);
+    emit(sendControlString("listening_yes"));
     client->startListen();
 }
 
@@ -60,6 +66,7 @@ void MainWindow::on_broadcastButton_clicked()
     ui->deviceComboBox->setEnabled(false);
     ui->broadcastButton->setEnabled(false);
     ui->endBroadcastButton->setEnabled(true);
+    emit(sendControlString("broadcasting_yes"));
     emit(startAudio());
 }
 
@@ -67,6 +74,7 @@ void MainWindow::on_stopListenButton_clicked()
 {
     ui->listenButton->setEnabled(true);
     ui->stopListenButton->setEnabled(false);
+    emit(sendControlString("listening_no"));
     client->endListen();
 }
 
@@ -75,6 +83,7 @@ void MainWindow::on_endBroadcastButton_clicked()
     ui->deviceComboBox->setEnabled(true);
     ui->broadcastButton->setEnabled(true);
     ui->endBroadcastButton->setEnabled(false);
+    emit(sendControlString("broadcasting_no"));
     emit(endAudio());
 }
 

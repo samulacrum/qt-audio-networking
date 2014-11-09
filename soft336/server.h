@@ -28,20 +28,35 @@ public slots:
     void changeDevice(QAudioDeviceInfo devinfo);
 
 private slots:
-    //void acceptTCPConnection();
     void sendBroadcast();
 
 private:
     QUdpSocket *socketUDP;
-    //QTcpSocket *socketTCP;
-    //QTcpServer *serverTCP;
     QTimer *broadcastTimer;
+    AudioInput *input;
+    QAudioDeviceInfo devinfo;
 
 public:
     ClientList *clientList;
     QHostAddress serverIP;
-    AudioInput *input;
-    QAudioDeviceInfo devinfo;
+};
+
+class TCPServer : public QObject
+{
+    Q_OBJECT
+public:
+    explicit TCPServer(QObject *parent = 0);
+
+public slots:
+    void sendData(QByteArray data);
+private slots:
+    void acceptTCPConnection();
+private:
+    QTcpSocket *socketTCP;
+    QTcpServer *serverTCP;
+
+public:
+
 };
 
 #endif // SERVER_H

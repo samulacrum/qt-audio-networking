@@ -19,13 +19,6 @@ Server::Server(QObject *parent) : QObject(parent)
     QList<QNetworkAddressEntry> laddr = ninter.addressEntries();
     qDebug() << "Server IP: " << laddr.at(1).ip() << endl;
     serverIP = laddr.at(1).ip();
-
-    /*
-    socketTCP = 0;
-    serverTCP = new QTcpServer(this);
-    serverTCP->listen(QHostAddress::Any, 8003);
-
-    connect(serverTCP, SIGNAL(newConnection()), this, SLOT(acceptTCPConnection()));*/
 }
 
 void Server::writeDatagram(QByteArray data)
@@ -50,12 +43,7 @@ void Server::writeDatagram(QByteArray data)
         }
     }
 }
-/*
-void Server::acceptTCPConnection() {
-    socketTCP = serverTCP->nextPendingConnection();
-    connect(socketTCP, SIGNAL(disconnected()), socketTCP, SLOT(deleteLater()));
-}
-*/
+
 void Server::sendBroadcast() {
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
@@ -77,9 +65,7 @@ void Server::appendClient(QString client)
 void Server::startAudioSend()
 {
     //initiate audio device
-    qDebug() << "error here?";
     input = new AudioInput(devinfo, this);
-    qDebug() << "error here?";
     connect(input, SIGNAL(dataReady(QByteArray)), this, SLOT(writeDatagram(QByteArray)));
 }
 
@@ -96,4 +82,27 @@ void Server::setVolume(float volume)
 void Server::changeDevice(QAudioDeviceInfo devinfo)
 {
     this->devinfo = devinfo;
+}
+
+//TCPServer
+
+TCPServer::TCPServer(QObject *parent) : QObject(parent)
+{
+    socketTCP = 0;
+    serverTCP = new QTcpServer(this);
+    serverTCP->listen(QHostAddress::Any, 8003);
+
+    connect(serverTCP, SIGNAL(newConnection()), this, SLOT(acceptTCPConnection()));
+}
+
+void TCPServer::acceptTCPConnection() {
+    qDebug() << "new Connection";
+    socketTCP = serverTCP->nextPendingConnection();
+    connect(socketTCP, SIGNAL(disconnected()), socketTCP, SLOT(deleteLater()));
+}
+
+void TCPServer::sendData(QByteArray data)
+{
+    if (socketTCP)
+        socketTCP->write(data);
 }

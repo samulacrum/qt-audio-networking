@@ -6,6 +6,8 @@
 #include <QtNetwork>
 #include <QTimer>
 
+#define TCP_PORT 8003
+
 class ClientInfo : public QObject
 {
     Q_OBJECT
@@ -17,7 +19,9 @@ public:
 private:
     QTimer *timer;
     QString address;
+    QTcpSocket *socketTCP;
 private slots:
+    void readyRead();
     void timerExpired();
 signals:
     void clientTimeout();
