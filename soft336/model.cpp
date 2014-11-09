@@ -47,7 +47,7 @@ void ClientInfo::readyRead()
     while(socketTCP->bytesAvailable() > 0)
         data.append(socketTCP->readAll());
 
-    qDebug() << "data received" << data;
+    qDebug() << "data received" << data << " from " << address;
     //do something with data here
 }
 
@@ -96,14 +96,13 @@ void ClientList::appendClient(QString clientAddress)
 
 QHostAddress ClientList::getAddressAt(const QModelIndex &index)
 {
-    qDebug() << "get address at (clientlist) called" << clients.at(index.row())->getAddress();
+    //qDebug() << "get address at (clientlist) called" << clients.at(index.row())->getAddress();
     return QHostAddress(clients.at(index.row())->getAddress());
 }
 
 //iterate through our list, return true if we find a matching address (and restarts it's timer)
 bool ClientList::hasAddress(QString address)
 {
-    qDebug() << clients.size();
     QList<ClientInfo *>::iterator i;
     for (i = clients.begin(); i != clients.end(); ++i) {
         if((*i)->getAddress() == address) {
