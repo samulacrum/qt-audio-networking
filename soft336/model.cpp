@@ -31,7 +31,7 @@ void ClientInfo::timerExpired()
 
 void ClientInfo::restartTimer()
 {
-    qDebug() << "Timer Restarted";
+    //qDebug() << "Timer Restarted";
     timer->start(500);
 }
 
@@ -47,7 +47,7 @@ void ClientInfo::readyRead()
     while(socketTCP->bytesAvailable() > 0)
         data.append(socketTCP->readAll());
 
-    qDebug() << "data received" << data.size();
+    qDebug() << "data received" << data;
     //do something with data here
 }
 
@@ -96,7 +96,7 @@ void ClientList::appendClient(QString clientAddress)
 
 QHostAddress ClientList::getAddressAt(const QModelIndex &index)
 {
-    qDebug() << "called" << clients.at(index.row())->getAddress();
+    qDebug() << "get address at (clientlist) called" << clients.at(index.row())->getAddress();
     return QHostAddress(clients.at(index.row())->getAddress());
 }
 

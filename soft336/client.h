@@ -7,7 +7,9 @@
 #include "audiooutput.h"
 
 #define UDP_PORT 8002
-
+/**
+ * @brief The Client class
+ */
 class Client : public QObject
 {
     Q_OBJECT

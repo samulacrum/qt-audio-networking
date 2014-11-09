@@ -14,19 +14,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //start server
     QAudioDeviceInfo devinfo = ui->deviceComboBox->itemData(ui->deviceComboBox->currentIndex()).value<QAudioDeviceInfo>();
-    server = new Server(this);
+    server = new Server();
     server->changeDevice(devinfo);
     connect(this, SIGNAL(startAudio()), server, SLOT(startAudioSend()));
     connect(this, SIGNAL(endAudio()), server, SLOT(endAudioSend()));
     connect(this, SIGNAL(deviceChanged(QAudioDeviceInfo)), server, SLOT(changeDevice(QAudioDeviceInfo)));
 
     //start TCP server
-    tcpserver = new TCPServer(this);
+    tcpserver = new TCPServer();
     connect(this, SIGNAL(sendControlString(QByteArray)), tcpserver, SLOT(sendData(QByteArray)));
 
-
     //start client
-    client = new Client(this);
+    client = new Client();
     connect(client, SIGNAL(clientBroadcastReceived(QString)), server, SLOT(appendClient(QString)));
 
     //move them to seperate threads

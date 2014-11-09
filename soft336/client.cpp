@@ -35,7 +35,7 @@ void Client::readDatagrams()
             }
         }
         else if (!controlString.compare("broadcast")) {
-            qDebug() << "Received broadcast from: " << senderAddress.toString();
+            //qDebug() << "Received broadcast from: " << senderAddress.toString();
             emit clientBroadcastReceived(senderAddress.toString());
         }
     }
