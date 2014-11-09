@@ -8,6 +8,8 @@ uses high quality audio sampled at cd quality.
 
 uses low level audio reading and writing in pull mode (lower latency).
 
+multithreaded network and audio code.
+
 achieves almost real-time communciation.
 
 uses compression to send and receieve the audio data.
@@ -26,9 +28,9 @@ allows users to select whether they want to broadcast or listen.
 solution loosely based on the audio examples provided by QT, networking based off official documentation.
 model is based from the model view tutorial.
 
-uses QTs datastream to serialise the audio information.
+uses QTs datastream to serialise the audio information. (based from the QDataStream tutorial).
 
-Phonon was considered, but deemed inappropriate, and instead uses QTMultimedia librarys.
+Phonon was considered, but deemed inappropriate (not very cross comptiable), and instead uses QTMultimedia librarys.
 
 caveats
 =======
@@ -41,7 +43,7 @@ would have more appropriate to use RTP to stream data, but could not find any ap
 
 makes use of network manager as a quick way to get the server IP address. Upon reading about this class, it would
 have made more sense to use this for the client and server functionality, as it asyncochronous by default (it was unclear
-whether the instances of UDP client, etc. where asyncochronous or not; the documentation was not consistent in this regard).
+whether the instances of UDP client, etc. where asyncochronous or not; the community/documentation was not consistent in this regard).
 
 to-do
 =====
@@ -54,6 +56,5 @@ take another look at QLIST<T>
 add a lot of error checking
 write documentation, using doxygen.
 
-//option to change audio input needs to addressed!!
--- fix change device
 --find out why get address is being called so many times
+

@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     server->changeDevice(devinfo);
     connect(this, SIGNAL(startAudio()), server, SLOT(startAudioSend()));
     connect(this, SIGNAL(endAudio()), server, SLOT(endAudioSend()));
-
+    connect(this, SIGNAL(deviceChanged(QAudioDeviceInfo)), server, SLOT(changeDevice(QAudioDeviceInfo)));
 
     //start client
     client = new Client();
@@ -91,8 +91,7 @@ void MainWindow::on_inputVolumeControl_sliderMoved(int position)
 
 void MainWindow::on_deviceComboBox_currentIndexChanged(int index)
 {
-    /*
     Q_UNUSED(index);
     QAudioDeviceInfo devinfo = ui->deviceComboBox->itemData(ui->deviceComboBox->currentIndex()).value<QAudioDeviceInfo>();
-    server->changeDevice(devinfo);*/
+    emit(deviceChanged(devinfo));
 }

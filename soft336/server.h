@@ -17,7 +17,6 @@ class Server : public QObject
 public:
     explicit Server(QObject *parent = 0);
     void setVolume(float volume);
-    void changeDevice(QAudioDeviceInfo devinfo);
 
 signals:
 
@@ -26,6 +25,7 @@ public slots:
     void appendClient(QString client);
     void startAudioSend();
     void endAudioSend();
+    void changeDevice(QAudioDeviceInfo devinfo);
 
 private slots:
     //void acceptTCPConnection();

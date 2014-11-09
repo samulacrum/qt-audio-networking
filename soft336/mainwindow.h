@@ -25,6 +25,7 @@ public:
 signals:
     void startAudio();
     void endAudio();
+    void deviceChanged(QAudioDeviceInfo devinfo);
 
 private slots:
     void getDeviceInfo();
@@ -34,7 +35,6 @@ private slots:
     void on_endBroadcastButton_clicked();
     void on_outputVolumeControl_sliderMoved(int position);
     void on_inputVolumeControl_sliderMoved(int position);
-
     void on_deviceComboBox_currentIndexChanged(int index);
 
 private:
