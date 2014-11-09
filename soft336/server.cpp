@@ -54,7 +54,7 @@ void Server::sendBroadcast() {
     //compress data before sending
     QByteArray compressed = qCompress(block);
 
-    //qDebug() << "broadcast sent: " << socketUDP->writeDatagram(compressed, QHostAddress::Broadcast, 8002);
+    qDebug() << "broadcast sent: " << socketUDP->writeDatagram(compressed, QHostAddress::Broadcast, 8002);
 }
 
 void Server::appendClient(QString client)
