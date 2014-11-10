@@ -19,9 +19,7 @@ public:
 private:
     QTimer *timer;
     QString address;
-    QTcpSocket *socketTCP;
 private slots:
-    void readyRead();
     void timerExpired();
 signals:
     void clientTimeout(QString cAddress);
@@ -45,24 +43,6 @@ public slots:
     void addClient(QString clientAddress);
 private slots:
     void clientTimeout(QString cAddress);
-};
-
-class TCPServer : public QObject
-{
-    Q_OBJECT
-public:
-    explicit TCPServer(QObject *parent = 0);
-
-public slots:
-    void sendData(QByteArray data);
-private slots:
-    void acceptTCPConnection();
-private:
-    QTcpSocket *socketTCP;
-    QTcpServer *serverTCP;
-
-public:
-
 };
 
 #endif // MODEL_H
