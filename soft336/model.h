@@ -38,10 +38,11 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     QHostAddress getAddressAt(const QModelIndex &index);
     bool hasAddress(QString address);
+    int getSize() const;
 private:
     QList<ClientInfo *> clients;
 public slots:
-    void appendClient(QString clientAddress);
+    void addClient(QString clientAddress);
 private slots:
     void clientTimeout(QString cAddress);
 };

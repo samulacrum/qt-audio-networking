@@ -14,13 +14,13 @@ ClientInfo::ClientInfo(QObject *parent, QString clientAddress) : QObject(parent)
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerExpired()));
     timer->start(2000);
-    /*
+
     //start the control string listener
     socketTCP = new QTcpSocket(this);
     socketTCP->connectToHost(address, TCP_PORT);
-    connect(socketTCP, SIGNAL(readyRead()), this, SLOT(readyRead()));*/
+    connect(socketTCP, SIGNAL(readyRead()), this, SLOT(readyRead()));
 
-    //qDebug() << socketTCP;
+    qDebug() << socketTCP;
 }
 
 ClientInfo::~ClientInfo()
@@ -31,7 +31,7 @@ ClientInfo::~ClientInfo()
 
 void ClientInfo::timerExpired()
 {
-    qDebug() << "Client Timeout";
+    qDebug() << "Client Timeout:" << address;
     emit clientTimeout(address);
 }
 
@@ -88,7 +88,7 @@ QVariant ClientList::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void ClientList::appendClient(QString clientAddress)
+void ClientList::addClient(QString clientAddress)
 {
     if(!hasAddress(clientAddress)) {
         beginInsertRows(QModelIndex(), 0, 0);
@@ -104,7 +104,9 @@ QHostAddress ClientList::getAddressAt(const QModelIndex &index)
 {
     //qDebug() << "get address at (clientlist) called" << clients.at(index.row())->getAddress();
     if (clients.size() > 0)
-        return QHostAddress(clients.at(index.row())->getAddress());
+        return QHostAddress(clients.at(index.row() - 1)->getAddress());
+    else
+        return QHostAddress();
 }
 
 //iterate through our list, return true if we find a matching address (and restart it's timer)
@@ -132,10 +134,16 @@ void ClientList::clientTimeout(QString address)
         }
     }
     beginRemoveRows(QModelIndex(), loc, loc);
-    qDebug("Client Removed");
-    delete clients.at(loc);
+    ClientInfo *temp = clients.at(loc);
+    clients.removeAt(loc);
+    delete temp;
     endRemoveRows();
     qDebug() << "Client Removed, size: " << clients.size();
+}
+
+int ClientList::getSize() const
+{
+    return clients.size();
 }
 
 /**
