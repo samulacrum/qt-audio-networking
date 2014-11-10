@@ -5,6 +5,7 @@
 #include <QAbstractTableModel>
 #include <QtNetwork>
 #include <QTimer>
+#include <QBrush>
 
 #define TCP_PORT 8003
 
@@ -23,6 +24,9 @@ private slots:
     void timerExpired();
 signals:
     void clientTimeout(QString cAddress);
+public:
+    bool isListening;
+    bool isBroadcasting;
 };
 
 

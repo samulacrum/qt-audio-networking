@@ -13,7 +13,7 @@ ClientInfo::ClientInfo(QObject *parent, QString clientAddress) : QObject(parent)
     //start the timeout timer
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerExpired()));
-    timer->start(2000);
+    timer->start(1000);
 }
 
 ClientInfo::~ClientInfo()
@@ -30,7 +30,7 @@ void ClientInfo::timerExpired()
 void ClientInfo::restartTimer()
 {
     //qDebug() << "Timer Restarted";
-    timer->start(2000);
+    timer->start(1000);
 }
 
 QString ClientInfo::getAddress() const
@@ -60,10 +60,31 @@ int ClientList::columnCount(const QModelIndex &) const
 
 QVariant ClientList::data(const QModelIndex &index, int role) const
 {
+    int row = index.row();
+    int col = index.column();
+
     if (role == Qt::DisplayRole)
     {
-        if (clients.size() > 0)
-            return clients.at(index.row())->getAddress(); //problem?
+        if (clients.size() > 0) {
+            if (col == 0)
+                return clients.at(row)->getAddress();
+        }
+    }
+    if (role == Qt::BackgroundRole) {
+        if (clients.size() > 0) {
+            if (col == 1) {
+                if(clients.at(row)->isBroadcasting)
+                    return QBrush(Qt::green);
+                else
+                    return QBrush(Qt::red);
+            }
+            if (col == 2) {
+                if(clients.at(row)->isListening)
+                    return QBrush(Qt::green);
+                else
+                    return QBrush(Qt::red);
+            }
+        }
     }
     return QVariant();
 }
@@ -101,6 +122,26 @@ void ClientList::processClient(QString clientAddress, QString controlString)
 
     //process the control string, and update accordingly
     qDebug() << "control string: " << controlString;
+    QStringList control = controlString.split(":", QString::SkipEmptyParts);
+    if (control.size() == 3) {
+        for (int i = 0; i < clients.size(); ++i) {
+            if (clients.at(i)->getAddress() == clientAddress) {
+                //clients.at(i)->isBroadcasting
+                if(control.at(1).contains("broadcasting_yes")) {
+                    clients.at(i)->isBroadcasting = true;
+                }
+                if(control.at(1).contains("broadcasting_no")) {
+                    clients.at(i)->isBroadcasting = false;
+                }
+                if(control.at(2).contains("listening_yes")) {
+                    clients.at(i)->isListening = true;
+                }
+                if(control.at(2).contains("listening_no")) {
+                    clients.at(i)->isListening = false;
+                }
+            }
+        }
+    }
 }
 
 QHostAddress ClientList::getAddressAt(const QModelIndex &index)
