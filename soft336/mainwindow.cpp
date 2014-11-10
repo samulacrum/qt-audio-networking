@@ -24,14 +24,14 @@ MainWindow::MainWindow(QWidget *parent) :
     //start client
     client = new Client();
     connect(client, SIGNAL(clientBroadcastReceived(QString, QString)), server, SLOT(processBroadcast(QString, QString)));
-
+/*
     //move them to seperate threads
     server->moveToThread(serverThread);
     client->moveToThread(clientThread);
 
     serverThread->start();
     clientThread->start();
-
+*/
     //finally, set the model for the table view
     ui->clientListTableView->setModel(server->clientList);
 }

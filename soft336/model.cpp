@@ -129,6 +129,8 @@ void ClientList::processClient(QString clientAddress, QString controlString)
                 //clients.at(i)->isBroadcasting
                 if(control.at(1).contains("broadcasting_yes")) {
                     clients.at(i)->isBroadcasting = true;
+                    QModelIndex topLeft = createIndex(i,1);
+                    emit dataChanged(topLeft, topLeft);
                 }
                 if(control.at(1).contains("broadcasting_no")) {
                     clients.at(i)->isBroadcasting = false;

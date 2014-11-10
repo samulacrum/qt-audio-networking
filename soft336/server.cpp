@@ -51,16 +51,18 @@ void Server::writeDatagram(QByteArray data)
 
 void Server::sendUpdate()
 {
-    QByteArray block;
-    QDataStream out(&block, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_5_3);
-    out << QString("update" + broadcastStatus + listeningStatus);
-    out << QByteArray();
+    if (socketUDP) {
+        QByteArray block;
+        QDataStream out(&block, QIODevice::WriteOnly);
+        out.setVersion(QDataStream::Qt_5_3);
+        out << QString("update" + broadcastStatus + listeningStatus);
+        out << QByteArray();
 
-    //compress data before sending
-    QByteArray compressed = qCompress(block);
+        //compress data before sending
+        QByteArray compressed = qCompress(block);
 
-    qDebug() << "update sent: " << socketUDP->writeDatagram(compressed, QHostAddress::Broadcast, 8002);
+        qDebug() << "update sent: " << socketUDP->writeDatagram(compressed, QHostAddress::Broadcast, 8002);
+    }
 }
 
 void Server::updateBroadcast(QString data)
@@ -95,6 +97,7 @@ void Server::startAudioSend()
 void Server::endAudioSend()
 {
     delete input;
+    input = 0;
 }
 
 void Server::setVolume(float volume)

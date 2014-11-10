@@ -48,17 +48,10 @@ whether the instances of UDP client, etc. where asyncochronous or not; the commu
 to-do
 =====
 
-add better buffering
-add multithreading, and some usage of TCP????
-in client view, add option to view who is broadcasting, and who is listening VIA TCP!!
-sync transmission information?
-take another look at QLIST<T>
 add a lot of error checking
 write documentation, using doxygen.
 
---find out why get address is being called so many times
---control string server needs to have 1 thread per client??
---add table header
-
+***move client list into mainthread ***
 ***clientlist needs a look at***
+***make table update on client list update***
 
