@@ -12,8 +12,8 @@ class ClientInfo : public QObject
 {
     Q_OBJECT
 public:
-    ClientInfo() {}
     ClientInfo(QObject *parent, QString clientAddress);
+    ~ClientInfo();
     void restartTimer();
     QString getAddress() const;
 private:
@@ -24,7 +24,7 @@ private slots:
     void readyRead();
     void timerExpired();
 signals:
-    void clientTimeout();
+    void clientTimeout(QString cAddress);
 };
 
 
@@ -43,7 +43,25 @@ private:
 public slots:
     void appendClient(QString clientAddress);
 private slots:
-    void clientTimeout();
+    void clientTimeout(QString cAddress);
+};
+
+class TCPServer : public QObject
+{
+    Q_OBJECT
+public:
+    explicit TCPServer(QObject *parent = 0);
+
+public slots:
+    void sendData(QByteArray data);
+private slots:
+    void acceptTCPConnection();
+private:
+    QTcpSocket *socketTCP;
+    QTcpServer *serverTCP;
+
+public:
+
 };
 
 #endif // MODEL_H

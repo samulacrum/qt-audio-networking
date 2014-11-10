@@ -83,26 +83,3 @@ void Server::changeDevice(QAudioDeviceInfo devinfo)
 {
     this->devinfo = devinfo;
 }
-
-//TCPServer
-
-TCPServer::TCPServer(QObject *parent) : QObject(parent)
-{
-    socketTCP = 0;
-    serverTCP = new QTcpServer(this);
-    serverTCP->listen(QHostAddress::Any, 8003);
-
-    connect(serverTCP, SIGNAL(newConnection()), this, SLOT(acceptTCPConnection()));
-}
-
-void TCPServer::acceptTCPConnection() {
-    qDebug() << "new Connection";
-    socketTCP = serverTCP->nextPendingConnection();
-    connect(socketTCP, SIGNAL(disconnected()), socketTCP, SLOT(deleteLater()));
-}
-
-void TCPServer::sendData(QByteArray data)
-{
-    if (socketTCP)
-        socketTCP->write(data);
-}

@@ -14,19 +14,25 @@ ClientInfo::ClientInfo(QObject *parent, QString clientAddress) : QObject(parent)
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerExpired()));
     timer->start(2000);
-
+    /*
     //start the control string listener
     socketTCP = new QTcpSocket(this);
     socketTCP->connectToHost(address, TCP_PORT);
-    connect(socketTCP, SIGNAL(readyRead()), this, SLOT(readyRead()));
+    connect(socketTCP, SIGNAL(readyRead()), this, SLOT(readyRead()));*/
 
-    qDebug() << socketTCP;
+    //qDebug() << socketTCP;
+}
+
+ClientInfo::~ClientInfo()
+{
+    delete socketTCP;
+    delete timer;
 }
 
 void ClientInfo::timerExpired()
 {
     qDebug() << "Client Timeout";
-    emit clientTimeout();
+    emit clientTimeout(address);
 }
 
 void ClientInfo::restartTimer()
@@ -57,7 +63,6 @@ void ClientInfo::readyRead()
  * @param parent
  */
 ClientList::ClientList(QObject *parent)
-//    : QAbstractListModel(parent)
     :QAbstractTableModel(parent)
 {
     clients = QList<ClientInfo *>();
@@ -86,12 +91,12 @@ QVariant ClientList::data(const QModelIndex &index, int role) const
 void ClientList::appendClient(QString clientAddress)
 {
     if(!hasAddress(clientAddress)) {
-        qDebug("Client Added");
         beginInsertRows(QModelIndex(), 0, 0);
         ClientInfo *newClient = new ClientInfo(this, clientAddress);
         clients.insert(0, newClient);
-        connect(newClient, SIGNAL(clientTimeout()), this, SLOT(clientTimeout()));
+        connect(newClient, SIGNAL(clientTimeout(QString)), this, SLOT(clientTimeout(QString)));
         endInsertRows();
+        qDebug() << "Client Added, size: " << clients.size();
     }
 }
 
@@ -106,10 +111,10 @@ QHostAddress ClientList::getAddressAt(const QModelIndex &index)
 bool ClientList::hasAddress(QString address)
 {
     if (clients.size() > 0) {
-        QList<ClientInfo *>::iterator i;
-        for (i = clients.begin(); i != clients.end(); ++i) {
-            if((*i)->getAddress() == address) {
-                (*i)->restartTimer();
+        for (int i = 0; i < clients.size(); ++i) {
+            if (clients.at(i)->getAddress() == address) {
+                //qDebug() << "Timer Restarted for: " << address << "at" << clients.at(i)->getAddress();
+                clients.at(i)->restartTimer();
                 return true;
             }
         }
@@ -117,15 +122,43 @@ bool ClientList::hasAddress(QString address)
     return false;
 }
 
-
-
-void ClientList::clientTimeout()
+void ClientList::clientTimeout(QString address)
 {
+    int loc;
     //remove the timeout client
-    int loc = clients.indexOf((ClientInfo *)QObject::sender());
+    for (int i = 0; i < clients.size(); ++i) {
+        if (clients.at(i)->getAddress() == address) {
+            loc = i;
+        }
+    }
     beginRemoveRows(QModelIndex(), loc, loc);
     qDebug("Client Removed");
-    clients.removeAt(loc);
-    //delete QObject::sender(); //might not be needed?
+    delete clients.at(loc);
     endRemoveRows();
+    qDebug() << "Client Removed, size: " << clients.size();
+}
+
+/**
+ * @brief TCPServer::TCPServer
+ * @param parent
+ */
+TCPServer::TCPServer(QObject *parent) : QObject(parent)
+{
+    socketTCP = 0;
+    serverTCP = new QTcpServer(this);
+    serverTCP->listen(QHostAddress::Any, 8003);
+
+    connect(serverTCP, SIGNAL(newConnection()), this, SLOT(acceptTCPConnection()));
+}
+
+void TCPServer::acceptTCPConnection() {
+    qDebug() << "new Connection";
+    socketTCP = serverTCP->nextPendingConnection();
+    connect(socketTCP, SIGNAL(disconnected()), socketTCP, SLOT(deleteLater()));
+}
+
+void TCPServer::sendData(QByteArray data)
+{
+    if (socketTCP)
+        socketTCP->write(data);
 }

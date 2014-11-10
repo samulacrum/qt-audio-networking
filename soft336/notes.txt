@@ -60,3 +60,5 @@ write documentation, using doxygen.
 --control string server needs to have 1 thread per client??
 --add table header
 
+***clientlist needs a look at***
+
