@@ -104,7 +104,7 @@ QHostAddress ClientList::getAddressAt(const QModelIndex &index)
 {
     //qDebug() << "get address at (clientlist) called" << clients.at(index.row())->getAddress();
     if (clients.size() > 0)
-        return QHostAddress(clients.at(index.row() - 1)->getAddress());
+        return QHostAddress(clients.at(index.row())->getAddress());
     else
         return QHostAddress();
 }

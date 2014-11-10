@@ -19,6 +19,8 @@ Server::Server(QObject *parent) : QObject(parent)
     QList<QNetworkAddressEntry> laddr = ninter.addressEntries();
     qDebug() << "Server IP: " << laddr.at(1).ip() << endl;
     serverIP = laddr.at(1).ip();
+
+    this->appendClient(serverIP.toString());
 }
 
 void Server::writeDatagram(QByteArray data)
