@@ -126,20 +126,25 @@ void ClientList::processClient(QString clientAddress, QString controlString)
     if (control.size() == 3) {
         for (int i = 0; i < clients.size(); ++i) {
             if (clients.at(i)->getAddress() == clientAddress) {
-                //clients.at(i)->isBroadcasting
                 if(control.at(1).contains("broadcasting_yes")) {
                     clients.at(i)->isBroadcasting = true;
-                    QModelIndex topLeft = createIndex(i,1);
-                    emit dataChanged(topLeft, topLeft);
+                    QModelIndex index = createIndex(i,1);
+                    emit dataChanged(index, index);
                 }
                 if(control.at(1).contains("broadcasting_no")) {
                     clients.at(i)->isBroadcasting = false;
+                    QModelIndex index = createIndex(i,1);
+                    emit dataChanged(index, index);
                 }
                 if(control.at(2).contains("listening_yes")) {
                     clients.at(i)->isListening = true;
+                    QModelIndex index = createIndex(i,2);
+                    emit dataChanged(index, index);
                 }
                 if(control.at(2).contains("listening_no")) {
                     clients.at(i)->isListening = false;
+                    QModelIndex index = createIndex(i,2);
+                    emit dataChanged(index, index);
                 }
             }
         }
@@ -148,7 +153,6 @@ void ClientList::processClient(QString clientAddress, QString controlString)
 
 QHostAddress ClientList::getAddressAt(const QModelIndex &index)
 {
-    //qDebug() << "get address at (clientlist) called" << clients.at(index.row())->getAddress();
     if (clients.size() > 0)
         return QHostAddress(clients.at(index.row())->getAddress());
     else
@@ -161,7 +165,6 @@ bool ClientList::hasAddress(QString address)
     if (clients.size() > 0) {
         for (int i = 0; i < clients.size(); ++i) {
             if (clients.at(i)->getAddress() == address) {
-                //qDebug() << "Timer Restarted for: " << address << "at" << clients.at(i)->getAddress();
                 clients.at(i)->restartTimer();
                 return true;
             }

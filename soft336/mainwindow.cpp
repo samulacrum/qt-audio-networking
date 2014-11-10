@@ -12,9 +12,11 @@ MainWindow::MainWindow(QWidget *parent) :
     setFixedSize(size()); //prevent window resizing
     getDeviceInfo(); //read available input devices
 
+    clients = new ClientList(this);
+
     //start server
     QAudioDeviceInfo devinfo = ui->deviceComboBox->itemData(ui->deviceComboBox->currentIndex()).value<QAudioDeviceInfo>();
-    server = new Server();
+    server = new Server(clients);
     server->changeDevice(devinfo);
     connect(this, SIGNAL(startAudio()), server, SLOT(startAudioSend()));
     connect(this, SIGNAL(endAudio()), server, SLOT(endAudioSend()));
@@ -23,17 +25,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //start client
     client = new Client();
-    connect(client, SIGNAL(clientBroadcastReceived(QString, QString)), server, SLOT(processBroadcast(QString, QString)));
-/*
+    connect(client, SIGNAL(clientBroadcastReceived(QString, QString)), this, SLOT(processBroadcast(QString, QString)));
+
     //move them to seperate threads
     server->moveToThread(serverThread);
     client->moveToThread(clientThread);
 
     serverThread->start();
     clientThread->start();
-*/
+
     //finally, set the model for the table view
-    ui->clientListTableView->setModel(server->clientList);
+    ui->clientListTableView->setModel(clients);
+}
+
+void MainWindow::processBroadcast(QString address, QString controlString)
+{
+    clients->processClient(address, controlString);
 }
 
 MainWindow::~MainWindow()

@@ -1,13 +1,13 @@
 #include "server.h"
 
-Server::Server(QObject *parent) : QObject(parent)
+Server::Server(ClientList *clients, QObject *parent) : QObject(parent)
 {
     broadcastStatus = ":broadcasting_no";
     listeningStatus = ":listening_no";
 
     //iniate udp server and client list
     socketUDP = new QUdpSocket(this);
-    clientList = new ClientList(this);
+    clientList = clients;
 
     //initiate the broadcast timer
     broadcastTimer = new QTimer(this);
@@ -80,11 +80,6 @@ void Server::updateBroadcast(QString data)
     if(data.contains("listening_no")) {
         listeningStatus = ":" + data;
     }
-}
-
-void Server::processBroadcast(QString address, QString controlString)
-{
-    clientList->processClient(address, controlString);
 }
 
 void Server::startAudioSend()

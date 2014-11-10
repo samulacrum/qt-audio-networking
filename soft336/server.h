@@ -16,14 +16,11 @@ class Server : public QObject
 {
     Q_OBJECT
 public:
-    explicit Server(QObject *parent = 0);
+    explicit Server(ClientList *clients, QObject *parent = 0);
     void setVolume(float volume);
-
-signals:
 
 public slots:
     void writeDatagram(QByteArray data);
-    void processBroadcast(QString address, QString controlString);
     void startAudioSend();
     void endAudioSend();
     void changeDevice(QAudioDeviceInfo devinfo);

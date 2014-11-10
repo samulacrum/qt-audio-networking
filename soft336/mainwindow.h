@@ -31,6 +31,8 @@ signals:
 
 private slots:
     void getDeviceInfo();
+    void processBroadcast(QString address, QString controlString);
+
     void on_listenButton_clicked();
     void on_broadcastButton_clicked();
     void on_stopListenButton_clicked();
@@ -43,6 +45,7 @@ private:
     Ui::MainWindow *ui;
     Client  *client;
     Server *server;
+    ClientList *clients;
 
     QThread *serverThread;
     QThread *clientThread;
