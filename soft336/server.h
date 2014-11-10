@@ -5,6 +5,7 @@
 #include <QtNetwork>
 #include <QtMultimedia>
 #include <QTimer>
+#include <QThread>
 
 #include "audioinput.h"
 #include "model.h"

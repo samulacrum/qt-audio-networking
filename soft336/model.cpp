@@ -49,6 +49,7 @@ void ClientInfo::readyRead()
 
     qDebug() << "data received" << data << " from " << address;
     //do something with data here
+
 }
 
 /**
@@ -97,17 +98,20 @@ void ClientList::appendClient(QString clientAddress)
 QHostAddress ClientList::getAddressAt(const QModelIndex &index)
 {
     //qDebug() << "get address at (clientlist) called" << clients.at(index.row())->getAddress();
-    return QHostAddress(clients.at(index.row())->getAddress());
+    if (clients.size() > 0)
+        return QHostAddress(clients.at(index.row())->getAddress());
 }
 
-//iterate through our list, return true if we find a matching address (and restarts it's timer)
+//iterate through our list, return true if we find a matching address (and restart it's timer)
 bool ClientList::hasAddress(QString address)
 {
-    QList<ClientInfo *>::iterator i;
-    for (i = clients.begin(); i != clients.end(); ++i) {
-        if((*i)->getAddress() == address) {
-            (*i)->restartTimer();
-            return true;
+    if (clients.size() > 0) {
+        QList<ClientInfo *>::iterator i;
+        for (i = clients.begin(); i != clients.end(); ++i) {
+            if((*i)->getAddress() == address) {
+                (*i)->restartTimer();
+                return true;
+            }
         }
     }
     return false;
@@ -117,11 +121,11 @@ bool ClientList::hasAddress(QString address)
 
 void ClientList::clientTimeout()
 {
-    //remove the timeout client here
+    //remove the timeout client
     int loc = clients.indexOf((ClientInfo *)QObject::sender());
     beginRemoveRows(QModelIndex(), loc, loc);
     qDebug("Client Removed");
     clients.removeAt(loc);
-    delete QObject::sender(); //might not be needed?
+    //delete QObject::sender(); //might not be needed?
     endRemoveRows();
 }
