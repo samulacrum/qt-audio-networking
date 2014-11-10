@@ -20,6 +20,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(endAudio()), server, SLOT(endAudioSend()));
     connect(this, SIGNAL(deviceChanged(QAudioDeviceInfo)), server, SLOT(changeDevice(QAudioDeviceInfo)));
 
+    //start TCP server
+    tcpserver = new TCPServer();
+    connect(this, SIGNAL(sendControlString(QByteArray)), tcpserver, SLOT(sendData(QByteArray)));
+
     //start client
     client = new Client();
     connect(client, SIGNAL(clientBroadcastReceived(QString)), server, SLOT(appendClient(QString)));

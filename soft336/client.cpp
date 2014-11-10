@@ -5,7 +5,6 @@ Client::Client(QObject *parent)
       output(new AudioOutput(this)),
       socket(new QUdpSocket(this))
 {
-    qDebug() << "Client Started";
     listen = false;
     socket->bind(UDP_PORT);
     connect(socket, SIGNAL(readyRead()), this, SLOT(readDatagrams()));
@@ -13,7 +12,6 @@ Client::Client(QObject *parent)
 
 void Client::readDatagrams()
 {
-    qDebug() << "reading datagrams";
     while (socket->hasPendingDatagrams()) {
         QHostAddress senderAddress; //holds our sender address
         QByteArray audioBlock; //holds received audio
@@ -37,7 +35,7 @@ void Client::readDatagrams()
             }
         }
         else if (!controlString.compare("broadcast")) {
-            qDebug() << "Received broadcast from: " << senderAddress.toString();
+            //qDebug() << "Received broadcast from: " << senderAddress.toString();
             emit clientBroadcastReceived(senderAddress.toString());
         }
     }

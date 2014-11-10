@@ -43,6 +43,7 @@ private:
     Ui::MainWindow *ui;
     Client  *client;
     Server *server;
+    TCPServer *tcpserver;
 
     QThread *serverThread;
     QThread *clientThread;
