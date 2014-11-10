@@ -10,6 +10,12 @@ Client::Client(QObject *parent)
     connect(socket, SIGNAL(readyRead()), this, SLOT(readDatagrams()));
 }
 
+Client::~Client()
+{
+    if (socket) delete socket;
+    if (output) delete output;
+}
+
 void Client::readDatagrams()
 {
     while (socket->hasPendingDatagrams()) {

@@ -48,6 +48,7 @@ ClientList::ClientList(QObject *parent)
     clients = QList<ClientInfo *>();
 }
 
+
 int ClientList::rowCount(const QModelIndex &) const
 {
     return clients.size();

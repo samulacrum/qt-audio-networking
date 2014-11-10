@@ -15,6 +15,7 @@ class Client : public QObject
     Q_OBJECT
 public:
     explicit Client(QObject *parent = 0);
+    ~Client();
     void startListen();
     void endListen();
     void setVolume(float volume);

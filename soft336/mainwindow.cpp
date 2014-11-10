@@ -4,6 +4,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
+    clients(new ClientList(this)),
     serverThread(new QThread(this)),
     clientThread(new QThread(this))
 {
@@ -11,8 +12,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setFixedSize(size()); //prevent window resizing
     getDeviceInfo(); //read available input devices
-
-    clients = new ClientList(this);
 
     //start server
     QAudioDeviceInfo devinfo = ui->deviceComboBox->itemData(ui->deviceComboBox->currentIndex()).value<QAudioDeviceInfo>();
@@ -34,8 +33,12 @@ MainWindow::MainWindow(QWidget *parent) :
     serverThread->start();
     clientThread->start();
 
-    //finally, set the model for the table view
+    //finally, set the model for the table view, and resize columns
     ui->clientListTableView->setModel(clients);
+    for (int i = 0; i < ui->clientListTableView->horizontalHeader()->count(); ++i)
+    {
+        ui->clientListTableView->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
+    }
 }
 
 void MainWindow::processBroadcast(QString address, QString controlString)
@@ -46,6 +49,11 @@ void MainWindow::processBroadcast(QString address, QString controlString)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete serverThread;
+    delete clientThread;
+    delete server;
+    delete client;
+
 }
 
 void MainWindow::on_listenButton_clicked()

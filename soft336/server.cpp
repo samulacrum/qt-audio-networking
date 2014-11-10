@@ -1,12 +1,12 @@
 #include "server.h"
 
-Server::Server(ClientList *clients, QObject *parent) : QObject(parent)
+Server::Server(ClientList *clients, QObject *parent)
+    : QObject(parent),
+      socket(new QUdpSocket(this))
 {
     broadcastStatus = ":broadcasting_no";
     listeningStatus = ":listening_no";
 
-    //iniate udp server and client list
-    socketUDP = new QUdpSocket(this);
     clientList = clients;
 
     //initiate the broadcast timer
@@ -22,13 +22,19 @@ Server::Server(ClientList *clients, QObject *parent) : QObject(parent)
     QList<QNetworkAddressEntry> laddr = ninter.addressEntries();
     qDebug() << "Server IP: " << laddr.at(1).ip() << endl;
     serverIP = laddr.at(1).ip();
+}
 
-    //this->processBroadcast(serverIP.toString());
+Server::~Server()
+{
+    delete socket;
+    delete broadcastTimer;
+    //if (input) delete input;
+    delete clientList;
 }
 
 void Server::writeDatagram(QByteArray data)
 {
-    if (socketUDP) {
+    if (socket) {
         //package data into a data stream
         QByteArray block;
         QDataStream out(&block, QIODevice::WriteOnly);
@@ -43,7 +49,7 @@ void Server::writeDatagram(QByteArray data)
         for (int i = 0; i < clientList->getSize(); i++) {
             QHostAddress sendTo = clientList->getAddressAt(clientList->index(i, 0));
             if(sendTo != serverIP) {
-                qDebug() << "audio sent: " << socketUDP->writeDatagram(compressed, sendTo, UDP_PORT) << " to: " << sendTo.toString();
+                qDebug() << "audio sent: " << socket->writeDatagram(compressed, sendTo, UDP_PORT) << " to: " << sendTo.toString();
             }
         }
     }
@@ -51,7 +57,7 @@ void Server::writeDatagram(QByteArray data)
 
 void Server::sendUpdate()
 {
-    if (socketUDP) {
+    if (socket) {
         QByteArray block;
         QDataStream out(&block, QIODevice::WriteOnly);
         out.setVersion(QDataStream::Qt_5_3);
@@ -61,7 +67,7 @@ void Server::sendUpdate()
         //compress data before sending
         QByteArray compressed = qCompress(block);
 
-        qDebug() << "update sent: " << socketUDP->writeDatagram(compressed, QHostAddress::Broadcast, 8002);
+        qDebug() << "update sent: " << socket->writeDatagram(compressed, QHostAddress::Broadcast, 8002);
     }
 }
 
@@ -91,8 +97,8 @@ void Server::startAudioSend()
 
 void Server::endAudioSend()
 {
-    delete input;
-    input = 0;
+    if (input)
+        delete input;
 }
 
 void Server::setVolume(float volume)

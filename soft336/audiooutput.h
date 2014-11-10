@@ -15,8 +15,6 @@ public:
     explicit AudioOutput(QObject *parent = 0);
     void setVolume(float volume);
 
-signals:
-
 public slots:
     void writeData(QByteArray data);
 

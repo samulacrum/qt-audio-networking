@@ -17,6 +17,7 @@ class Server : public QObject
     Q_OBJECT
 public:
     explicit Server(ClientList *clients, QObject *parent = 0);
+    ~Server();
     void setVolume(float volume);
 
 public slots:
@@ -30,7 +31,7 @@ private slots:
     void updateBroadcast(QString data);
 
 private:
-    QUdpSocket *socketUDP;
+    QUdpSocket *socket;
     QTimer *broadcastTimer;
     AudioInput *input;
     QAudioDeviceInfo devinfo;
