@@ -68,6 +68,25 @@ QVariant ClientList::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
+QVariant ClientList::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    if (role == Qt::DisplayRole)
+     {
+         if (orientation == Qt::Horizontal) {
+             switch (section)
+             {
+             case 0:
+                 return QString("IP");
+             case 1:
+                 return QString("Broadcasting");
+             case 2:
+                 return QString("Listening");
+             }
+         }
+     }
+     return QVariant();
+}
+
 void ClientList::processClient(QString clientAddress, QString controlString)
 {
     //add the client if it doesn't exist
@@ -82,7 +101,6 @@ void ClientList::processClient(QString clientAddress, QString controlString)
 
     //process the control string, and update accordingly
     qDebug() << "control string: " << controlString;
-
 }
 
 QHostAddress ClientList::getAddressAt(const QModelIndex &index)

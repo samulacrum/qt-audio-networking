@@ -26,7 +26,7 @@ auto displays all clients on the list.
 allows users to select whether they want to broadcast or listen.
 
 solution loosely based on the audio examples provided by QT, networking based off official documentation.
-model is based from the model view tutorial.
+model is based from the model view tutorial, some code from the tutorials is used directly, such as setting the headers.
 
 uses QTs datastream to serialise the audio information. (based from the QDataStream tutorial).
 
