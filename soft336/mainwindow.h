@@ -26,7 +26,7 @@ signals:
     void startAudio();
     void endAudio();
     void deviceChanged(QAudioDeviceInfo devinfo);
-    void sendControlString(QByteArray data);
+    void sendControlString(QString data);
     void endBroadcast();
 
 private slots:

@@ -23,19 +23,22 @@ signals:
 
 public slots:
     void writeDatagram(QByteArray data);
-    void appendClient(QString client);
+    void processBroadcast(QString address, QString controlString);
     void startAudioSend();
     void endAudioSend();
     void changeDevice(QAudioDeviceInfo devinfo);
 
 private slots:
-    void sendBroadcast();
+    void sendUpdate();
+    void updateBroadcast(QString data);
 
 private:
     QUdpSocket *socketUDP;
     QTimer *broadcastTimer;
     AudioInput *input;
     QAudioDeviceInfo devinfo;
+    QString broadcastStatus;
+    QString listeningStatus;
 
 public:
     ClientList *clientList;

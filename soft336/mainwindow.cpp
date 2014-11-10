@@ -18,11 +18,12 @@ MainWindow::MainWindow(QWidget *parent) :
     server->changeDevice(devinfo);
     connect(this, SIGNAL(startAudio()), server, SLOT(startAudioSend()));
     connect(this, SIGNAL(endAudio()), server, SLOT(endAudioSend()));
+    connect(this, SIGNAL(sendControlString(QString)), server, SLOT(updateBroadcast(QString)));
     connect(this, SIGNAL(deviceChanged(QAudioDeviceInfo)), server, SLOT(changeDevice(QAudioDeviceInfo)));
 
     //start client
     client = new Client();
-    connect(client, SIGNAL(clientBroadcastReceived(QString)), server, SLOT(appendClient(QString)));
+    connect(client, SIGNAL(clientBroadcastReceived(QString, QString)), server, SLOT(processBroadcast(QString, QString)));
 
     //move them to seperate threads
     server->moveToThread(serverThread);

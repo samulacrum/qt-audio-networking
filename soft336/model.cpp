@@ -38,8 +38,6 @@ QString ClientInfo::getAddress() const
     return address;
 }
 
-
-
 /**
  * @brief ClientList::ClientList
  * @param parent
@@ -70,8 +68,9 @@ QVariant ClientList::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void ClientList::addClient(QString clientAddress)
+void ClientList::processClient(QString clientAddress, QString controlString)
 {
+    //add the client if it doesn't exist
     if(!hasAddress(clientAddress)) {
         beginInsertRows(QModelIndex(), 0, 0);
         ClientInfo *newClient = new ClientInfo(this, clientAddress);
@@ -80,6 +79,10 @@ void ClientList::addClient(QString clientAddress)
         endInsertRows();
         qDebug() << "Client Added, size: " << clients.size();
     }
+
+    //process the control string, and update accordingly
+    qDebug() << "control string: " << controlString;
+
 }
 
 QHostAddress ClientList::getAddressAt(const QModelIndex &index)

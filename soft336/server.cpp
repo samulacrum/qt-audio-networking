@@ -2,13 +2,16 @@
 
 Server::Server(QObject *parent) : QObject(parent)
 {
+    broadcastStatus = ":broadcasting_no";
+    listeningStatus = ":listening_no";
+
     //iniate udp server and client list
     socketUDP = new QUdpSocket(this);
     clientList = new ClientList(this);
 
     //initiate the broadcast timer
     broadcastTimer = new QTimer(this);
-    connect (broadcastTimer, SIGNAL(timeout()), this, SLOT(sendBroadcast()));
+    connect (broadcastTimer, SIGNAL(timeout()), this, SLOT(sendUpdate()));
     broadcastTimer->start(200);
 
     //get our IP address
@@ -20,7 +23,7 @@ Server::Server(QObject *parent) : QObject(parent)
     qDebug() << "Server IP: " << laddr.at(1).ip() << endl;
     serverIP = laddr.at(1).ip();
 
-    this->appendClient(serverIP.toString());
+    //this->processBroadcast(serverIP.toString());
 }
 
 void Server::writeDatagram(QByteArray data)
@@ -46,22 +49,40 @@ void Server::writeDatagram(QByteArray data)
     }
 }
 
-void Server::sendBroadcast() {
+void Server::sendUpdate()
+{
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_3);
-    out << QString("broadcast");
+    out << QString("update" + broadcastStatus + listeningStatus);
     out << QByteArray();
 
     //compress data before sending
     QByteArray compressed = qCompress(block);
 
-    qDebug() << "broadcast sent: " << socketUDP->writeDatagram(compressed, QHostAddress::Broadcast, 8002);
+    qDebug() << "update sent: " << socketUDP->writeDatagram(compressed, QHostAddress::Broadcast, 8002);
 }
 
-void Server::appendClient(QString client)
+void Server::updateBroadcast(QString data)
 {
-    clientList->addClient(client);
+    //make changes to the control string here
+    if(data.contains("broadcasting_yes")) {
+        broadcastStatus = ":" + data;
+    }
+    if(data.contains("broadcasting_no")) {
+        broadcastStatus = ":" + data;
+    }
+    if(data.contains("listening_yes")) {
+        listeningStatus = ":" + data;
+    }
+    if(data.contains("listening_no")) {
+        listeningStatus = ":" + data;
+    }
+}
+
+void Server::processBroadcast(QString address, QString controlString)
+{
+    clientList->processClient(address, controlString);
 }
 
 void Server::startAudioSend()

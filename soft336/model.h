@@ -40,7 +40,7 @@ public:
 private:
     QList<ClientInfo *> clients;
 public slots:
-    void addClient(QString clientAddress);
+    void processClient(QString clientAddress, QString controlString);
 private slots:
     void clientTimeout(QString cAddress);
 };

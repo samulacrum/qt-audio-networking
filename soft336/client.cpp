@@ -34,9 +34,9 @@ void Client::readDatagrams()
                 output->writeData(audioBlock);
             }
         }
-        else if (!controlString.compare("broadcast")) {
+        else if (controlString.contains("update")) {
             //qDebug() << "Received broadcast from: " << senderAddress.toString();
-            emit clientBroadcastReceived(senderAddress.toString());
+            emit clientBroadcastReceived(senderAddress.toString(), controlString);
         }
     }
 }

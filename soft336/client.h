@@ -20,7 +20,7 @@ public:
     void setVolume(float volume);
 
 signals:
-    void clientBroadcastReceived(QString clientAddress);
+    void clientBroadcastReceived(QString clientAddress, QString controlString);
 public slots:
 
 private slots:
