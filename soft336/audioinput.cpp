@@ -23,6 +23,7 @@ void AudioInput::changeDevice(QAudioDeviceInfo devinfo)
 
 void AudioInput::startDevice(QAudioDeviceInfo devinfo)
 {
+    qDebug() << "device started";
     audio = new QAudioInput(devinfo, format, this);
     audio->setBufferSize(AUDIO_BUFFER_SIZE);
     device = audio->start();
@@ -31,24 +32,23 @@ void AudioInput::startDevice(QAudioDeviceInfo devinfo)
 
 void AudioInput::readyRead()
 {
-    if(sendAudio) {
-        QByteArray buffer;
+    QByteArray buffer;
 
-        //Check the number of samples in input buffer
-        qint64 len = audio->bytesReady();
-        qint64 l;
+    //Check the number of samples in input buffer
+    qint64 len = audio->bytesReady();
+    qint64 l;
 
-        if(len > AUDIO_BUFFER_SIZE)
-            len = AUDIO_BUFFER_SIZE;
+    if(len > AUDIO_BUFFER_SIZE)
+        len = AUDIO_BUFFER_SIZE;
 
-        //Read sound samples from input device to buffer
-        if (len > 0) {
-            buffer.resize(len);
-            l = device->read(buffer.data(), len);
-            //ensures we only send data if there is actual data to send
-            if (l > 0) {
+    //Read sound samples from input device to buffer
+    if (len > 0) {
+        buffer.resize(len);
+        l = device->read(buffer.data(), len);
+        //ensures we only send data if there is actual data to send
+        if (l > 0) {
+            if(sendAudio)
                 emit dataReady(buffer);
-            }
         }
     }
 }
@@ -60,6 +60,7 @@ void AudioInput::setVolume(float volume)
 
 void AudioInput::startAudio()
 {
+    qDebug() << "called";
     sendAudio = true;
 }
 
