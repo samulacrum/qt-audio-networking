@@ -9,7 +9,9 @@
 #define SAMPLE_SIZE 16
 
 //#define MAX_AMPLITUDE 32768
-
+/**
+ * @brief The AudioInput class, interface/controller for the audio input device.
+ */
 class AudioInput : public QObject
 {
     Q_OBJECT
@@ -23,8 +25,6 @@ public:
 
 signals:
     void dataReady(QByteArray data);
-
-public slots:
 
 private slots:
     void readyRead();

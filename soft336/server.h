@@ -11,7 +11,9 @@
 #include "model.h"
 
 #define UDP_PORT 8002
-
+/**
+ * @brief The Server class, responsible for reading from the audio device and sending across the network, and sending broadcast information.
+ */
 class Server : public QObject
 {
     Q_OBJECT

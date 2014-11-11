@@ -50,9 +50,7 @@ whether the instances of UDP client, etc. where asyncochronous or not; the commu
 to-do
 =====
 
-add a lot of error checking
 write documentation, using doxygen.
 
-***check for memory leaks***
-***fix memory leaks in audio input ***
+
 

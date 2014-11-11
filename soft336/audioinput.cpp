@@ -1,5 +1,10 @@
 #include "audioinput.h"
 
+/**
+ * @brief AudioInput::AudioInput default constructor for the AudioInput.
+ * @param devinfo the device info to use when initialiasing.
+ * @param parent the parent object.
+ */
 AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent)
     : QObject(parent),
       sendAudio(false)
@@ -14,13 +19,22 @@ AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent)
     startDevice(devinfo);
 }
 
+/**
+ * @brief AudioInput::changeDevice changes the input audio device.
+ * @param devinfo the new audio device.
+ */
 void AudioInput::changeDevice(QAudioDeviceInfo devinfo)
 {
     audio->stop();
     delete audio;
+
     startDevice(devinfo);
 }
 
+/**
+ * @brief AudioInput::startDevice initialises the audio and starts recording.
+ * @param devinfo device to read from.
+ */
 void AudioInput::startDevice(QAudioDeviceInfo devinfo)
 {
     qDebug() << "device started";
@@ -30,6 +44,9 @@ void AudioInput::startDevice(QAudioDeviceInfo devinfo)
     connect(device, SIGNAL(readyRead()), this, SLOT(readyRead()));
 }
 
+/**
+ * @brief AudioInput::readyRead slot called when device is ready to read, emits dataReady() signal.
+ */
 void AudioInput::readyRead()
 {
     QByteArray buffer;
@@ -53,17 +70,26 @@ void AudioInput::readyRead()
     }
 }
 
+/**
+ * @brief AudioInput::setVolume sets input volume of device.
+ * @param volume the volume to set.
+ */
 void AudioInput::setVolume(float volume)
 {
     audio->setVolume(volume);
 }
 
+/**
+ * @brief AudioInput::startAudio sets sendAudio to true; starts sending audio.
+ */
 void AudioInput::startAudio()
 {
-    qDebug() << "called";
     sendAudio = true;
 }
 
+/**
+ * @brief AudioInput::stopAudio sets sendAudio to false; stops sending audio.
+ */
 void AudioInput::stopAudio()
 {
     sendAudio = false;

@@ -9,6 +9,9 @@
 
 #define TCP_PORT 8003
 
+/**
+ * @brief The ClientInfo class, holds client IP address, and a timeout timer.
+ */
 class ClientInfo : public QObject
 {
     Q_OBJECT
@@ -29,7 +32,9 @@ public:
     bool isBroadcasting;
 };
 
-
+/**
+ * @brief The ClientList class, holds a QList of ClientInfo, which is used to store network clients.
+ */
 class ClientList : public QAbstractTableModel
 {
     Q_OBJECT
@@ -39,10 +44,8 @@ public:
     int columnCount(const QModelIndex &parent) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-    //bool setData(const QModelIndex &index, const QVariant &value, int role);
     QHostAddress getAddressAt(const QModelIndex &index);
     bool hasAddress(QString address);
-    int getSize() const;
 private:
     QList<ClientInfo *> clients;
 public slots:

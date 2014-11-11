@@ -1,9 +1,9 @@
 #include "model.h"
 
 /**
- * @brief ClientInfo::ClientInfo
- * @param parent
- * @param clientAddress
+ * @brief ClientInfo::ClientInfo default constructor for ClientInfo.
+ * @param parent the parent object.
+ * @param clientAddress the client IP address.
  */
 ClientInfo::ClientInfo(QObject *parent, QString clientAddress) : QObject(parent)
 {
@@ -21,26 +21,36 @@ ClientInfo::~ClientInfo()
     delete timer;
 }
 
+/**
+ * @brief ClientInfo::timerExpired called when timeout timer expires, informs the model.
+ */
 void ClientInfo::timerExpired()
 {
     qDebug() << "Client Timeout:" << address;
     emit clientTimeout(address);
 }
 
+/**
+ * @brief ClientInfo::restartTimer restarts a timer for a client.
+ */
 void ClientInfo::restartTimer()
 {
     //qDebug() << "Timer Restarted";
     timer->start(1000);
 }
 
+/**
+ * @brief ClientInfo::getAddress get a clients IP address.
+ * @return string containing clients IP address
+ */
 QString ClientInfo::getAddress() const
 {
     return address;
 }
 
 /**
- * @brief ClientList::ClientList
- * @param parent
+ * @brief ClientList::ClientList default constructor for ClientList.
+ * @param parent the parent object.
  */
 ClientList::ClientList(QObject *parent)
     :QAbstractTableModel(parent)
@@ -48,17 +58,30 @@ ClientList::ClientList(QObject *parent)
     clients = QList<ClientInfo *>();
 }
 
-
+/**
+ * @brief ClientList::rowCount gets the size of the ClientList.
+ * @return int of number of clients.
+ */
 int ClientList::rowCount(const QModelIndex &) const
 {
     return clients.size();
 }
 
+/**
+ * @brief ClientList::columnCount returns amount of columns.
+ * @return int of the number of columns.
+ */
 int ClientList::columnCount(const QModelIndex &) const
 {
     return 3;
 }
 
+/**
+ * @brief ClientList::data overloaded function for displaying the data in the table.
+ * @param index
+ * @param role
+ * @return
+ */
 QVariant ClientList::data(const QModelIndex &index, int role) const
 {
     int row = index.row();
@@ -90,6 +113,13 @@ QVariant ClientList::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
+/**
+ * @brief ClientList::headerData overloaded function for setting the header columns in the table.
+ * @param section
+ * @param orientation
+ * @param role
+ * @return
+ */
 QVariant ClientList::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole)
@@ -109,6 +139,11 @@ QVariant ClientList::headerData(int section, Qt::Orientation orientation, int ro
      return QVariant();
 }
 
+/**
+ * @brief ClientList::processClient process a client, adds them to the list if they don't exist, or updates an existing entry.
+ * @param clientAddress address of the client.
+ * @param controlString control string we have received.
+ */
 void ClientList::processClient(QString clientAddress, QString controlString)
 {
     //add the client if it doesn't exist
@@ -152,6 +187,11 @@ void ClientList::processClient(QString clientAddress, QString controlString)
     }
 }
 
+/**
+ * @brief ClientList::getAddressAt returns a client address at the index specified.
+ * @param index index of the client.
+ * @return address of the client at index.
+ */
 QHostAddress ClientList::getAddressAt(const QModelIndex &index)
 {
     if (clients.size() > 0)
@@ -160,7 +200,11 @@ QHostAddress ClientList::getAddressAt(const QModelIndex &index)
         return QHostAddress();
 }
 
-//iterate through our list, return true if we find a matching address (and restart it's timer)
+/**
+ * @brief ClientList::hasAddress checks if the list contains the address, and if it does, restarts its timer.
+ * @param address the address to check
+ * @return true or false if we have the client already.
+ */
 bool ClientList::hasAddress(QString address)
 {
     if (clients.size() > 0) {
@@ -174,6 +218,10 @@ bool ClientList::hasAddress(QString address)
     return false;
 }
 
+/**
+ * @brief ClientList::clientTimeout called when a client timeouts. removes the client, and informs the view.
+ * @param address
+ */
 void ClientList::clientTimeout(QString address)
 {
     int loc;
@@ -189,9 +237,4 @@ void ClientList::clientTimeout(QString address)
     delete temp;
     endRemoveRows();
     qDebug() << "Client Removed, size: " << clients.size();
-}
-
-int ClientList::getSize() const
-{
-    return clients.size();
 }

@@ -1,5 +1,9 @@
 #include "audiooutput.h"
 
+/**
+ * @brief AudioOutput::AudioOutput default constructor for AudioInput.
+ * @param parent the parent object.
+ */
 AudioOutput::AudioOutput(QObject *parent) : QObject(parent)
 {
     QAudioFormat format;
@@ -16,11 +20,19 @@ AudioOutput::AudioOutput(QObject *parent) : QObject(parent)
     device = audio->start();
 }
 
+/**
+ * @brief AudioOutput::writeData writes data to the output.
+ * @param data the data to write.
+ */
 void AudioOutput::writeData(QByteArray data)
 {
     qDebug() << "wrote: " << device->write(data.data(), data.size()) << " down from: " << data.size();
 }
 
+/**
+ * @brief AudioOutput::setVolume set the volume of the output device.
+ * @param volume the volume to set.
+ */
 void AudioOutput::setVolume(float volume)
 {
     qDebug() << "output volume set to:" << volume;

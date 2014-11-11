@@ -10,10 +10,17 @@
 #include "client.h"
 #include "server.h"
 
+/**
+ * @mainpage test
+ */
+
 namespace Ui {
-class MainWindow;
+    class MainWindow;
 }
 
+/**
+ * @brief The MainWindow class, view for the application.
+ */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

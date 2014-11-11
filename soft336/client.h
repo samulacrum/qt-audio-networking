@@ -8,7 +8,7 @@
 
 #define UDP_PORT 8002
 /**
- * @brief The Client class
+ * @brief The Client class, responsible for reading and processing datagrams, and playing audio.
  */
 class Client : public QObject
 {

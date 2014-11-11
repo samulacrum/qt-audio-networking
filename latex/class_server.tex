@@ -1,0 +1,174 @@
+\hypertarget{class_server}{\section{Server Class Reference}
+\label{class_server}\index{Server@{Server}}
+}
+
+
+The \hyperlink{class_server}{Server} class, responsible for reading from the audio device and sending across the network, and sending broadcast information.  
+
+
+
+
+{\ttfamily \#include $<$server.\+h$>$}
+
+Inheritance diagram for Server\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_server}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_server_a47ec2f74efe239057a33fa20183f8417}{write\+Datagram} (Q\+Byte\+Array data)
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_server_a47ec2f74efe239057a33fa20183f8417}{Server\+::write\+Datagram} write audio datagram(s) to all clients (excluding this one). \end{DoxyCompactList}\item 
+\hypertarget{class_server_aa2bc8edebbe7c55cda13e35969d288d8}{void \hyperlink{class_server_aa2bc8edebbe7c55cda13e35969d288d8}{start\+Audio\+Send} ()}\label{class_server_aa2bc8edebbe7c55cda13e35969d288d8}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_server_aa2bc8edebbe7c55cda13e35969d288d8}{Server\+::start\+Audio\+Send} initiates the audio device. \end{DoxyCompactList}\item 
+\hypertarget{class_server_a894e78a064ebbf6c0a82520941fc587b}{void \hyperlink{class_server_a894e78a064ebbf6c0a82520941fc587b}{end\+Audio\+Send} ()}\label{class_server_a894e78a064ebbf6c0a82520941fc587b}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_server_a894e78a064ebbf6c0a82520941fc587b}{Server\+::end\+Audio\+Send} stops the audio device. \end{DoxyCompactList}\item 
+void \hyperlink{class_server_a6754ec9f0275c85ea2e21047d2800b06}{change\+Device} (Q\+Audio\+Device\+Info devinfo)
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_server_a6754ec9f0275c85ea2e21047d2800b06}{Server\+::change\+Device} changes the audio device. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_server_a5132484423532e71a8836c520f340e0a}{Server} (\hyperlink{class_client_list}{Client\+List} $\ast$clients, Q\+Object $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_server_a5132484423532e71a8836c520f340e0a}{Server\+::\+Server} default constructor for the server. \end{DoxyCompactList}\item 
+void \hyperlink{class_server_a8dda22fb0d54f1ad3eb9c69017d98493}{set\+Volume} (float volume)
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_server_a8dda22fb0d54f1ad3eb9c69017d98493}{Server\+::set\+Volume} sets the volume of the input device. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_server_af1a9716febd17e14cce48a4ae2a0bce7}{\hyperlink{class_client_list}{Client\+List} $\ast$ {\bfseries client\+List}}\label{class_server_af1a9716febd17e14cce48a4ae2a0bce7}
+
+\item 
+\hypertarget{class_server_a23214ead7157ba34b1700434bf4ea8bd}{Q\+Host\+Address {\bfseries server\+I\+P}}\label{class_server_a23214ead7157ba34b1700434bf4ea8bd}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_server_a69da6d068b11feb5997dbfd6c8f863ac}{void \hyperlink{class_server_a69da6d068b11feb5997dbfd6c8f863ac}{send\+Update} ()}\label{class_server_a69da6d068b11feb5997dbfd6c8f863ac}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_server_a69da6d068b11feb5997dbfd6c8f863ac}{Server\+::send\+Update} sends an update broadcast, informing clients of our status. \end{DoxyCompactList}\item 
+void \hyperlink{class_server_a879b092399f867d8861e633192c10d47}{update\+Broadcast} (Q\+String data)
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_server_a879b092399f867d8861e633192c10d47}{Server\+::update\+Broadcast} updates the outgoing broadcast message. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_server_a66b3bdb5780364b9b13ce3836d23d30b}{Q\+Udp\+Socket $\ast$ {\bfseries socket}}\label{class_server_a66b3bdb5780364b9b13ce3836d23d30b}
+
+\item 
+\hypertarget{class_server_a9a123df402663d5cf77d37136a215660}{Q\+Timer $\ast$ {\bfseries broadcast\+Timer}}\label{class_server_a9a123df402663d5cf77d37136a215660}
+
+\item 
+\hypertarget{class_server_ae768ef05853969d0f7f0870b2e1b1d06}{\hyperlink{class_audio_input}{Audio\+Input} $\ast$ {\bfseries input}}\label{class_server_ae768ef05853969d0f7f0870b2e1b1d06}
+
+\item 
+\hypertarget{class_server_aaf9d54e01e90583f80efb6c63d15bae8}{Q\+Audio\+Device\+Info {\bfseries devinfo}}\label{class_server_aaf9d54e01e90583f80efb6c63d15bae8}
+
+\item 
+\hypertarget{class_server_a3ff13bf8f7dcaf334dd341f8b89907ce}{Q\+String {\bfseries broadcast\+Status}}\label{class_server_a3ff13bf8f7dcaf334dd341f8b89907ce}
+
+\item 
+\hypertarget{class_server_a5c32c8303cc0d59379af55769d678820}{Q\+String {\bfseries listening\+Status}}\label{class_server_a5c32c8303cc0d59379af55769d678820}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_server}{Server} class, responsible for reading from the audio device and sending across the network, and sending broadcast information. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_server_a5132484423532e71a8836c520f340e0a}{\index{Server@{Server}!Server@{Server}}
+\index{Server@{Server}!Server@{Server}}
+\subsubsection[{Server}]{\setlength{\rightskip}{0pt plus 5cm}Server\+::\+Server (
+\begin{DoxyParamCaption}
+\item[{{\bf Client\+List} $\ast$}]{clients, }
+\item[{Q\+Object $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [explicit]}}}\label{class_server_a5132484423532e71a8836c520f340e0a}
+
+
+\hyperlink{class_server_a5132484423532e71a8836c520f340e0a}{Server\+::\+Server} default constructor for the server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em clients} & pointer to the clients object we will read from when sending to clients. \\
+\hline
+{\em parent} & the parent object. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_server_a6754ec9f0275c85ea2e21047d2800b06}{\index{Server@{Server}!change\+Device@{change\+Device}}
+\index{change\+Device@{change\+Device}!Server@{Server}}
+\subsubsection[{change\+Device}]{\setlength{\rightskip}{0pt plus 5cm}void Server\+::change\+Device (
+\begin{DoxyParamCaption}
+\item[{Q\+Audio\+Device\+Info}]{devinfo}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_server_a6754ec9f0275c85ea2e21047d2800b06}
+
+
+\hyperlink{class_server_a6754ec9f0275c85ea2e21047d2800b06}{Server\+::change\+Device} changes the audio device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em devinfo} & the audio device to change too. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_server_a8dda22fb0d54f1ad3eb9c69017d98493}{\index{Server@{Server}!set\+Volume@{set\+Volume}}
+\index{set\+Volume@{set\+Volume}!Server@{Server}}
+\subsubsection[{set\+Volume}]{\setlength{\rightskip}{0pt plus 5cm}void Server\+::set\+Volume (
+\begin{DoxyParamCaption}
+\item[{float}]{volume}
+\end{DoxyParamCaption}
+)}}\label{class_server_a8dda22fb0d54f1ad3eb9c69017d98493}
+
+
+\hyperlink{class_server_a8dda22fb0d54f1ad3eb9c69017d98493}{Server\+::set\+Volume} sets the volume of the input device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em volume} & the audio to set. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_server_a879b092399f867d8861e633192c10d47}{\index{Server@{Server}!update\+Broadcast@{update\+Broadcast}}
+\index{update\+Broadcast@{update\+Broadcast}!Server@{Server}}
+\subsubsection[{update\+Broadcast}]{\setlength{\rightskip}{0pt plus 5cm}void Server\+::update\+Broadcast (
+\begin{DoxyParamCaption}
+\item[{Q\+String}]{data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}}\label{class_server_a879b092399f867d8861e633192c10d47}
+
+
+\hyperlink{class_server_a879b092399f867d8861e633192c10d47}{Server\+::update\+Broadcast} updates the outgoing broadcast message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & string containing broadcast status update. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_server_a47ec2f74efe239057a33fa20183f8417}{\index{Server@{Server}!write\+Datagram@{write\+Datagram}}
+\index{write\+Datagram@{write\+Datagram}!Server@{Server}}
+\subsubsection[{write\+Datagram}]{\setlength{\rightskip}{0pt plus 5cm}void Server\+::write\+Datagram (
+\begin{DoxyParamCaption}
+\item[{Q\+Byte\+Array}]{data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_server_a47ec2f74efe239057a33fa20183f8417}
+
+
+\hyperlink{class_server_a47ec2f74efe239057a33fa20183f8417}{Server\+::write\+Datagram} write audio datagram(s) to all clients (excluding this one). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & audio data to send. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+soft336/server.\+h\item 
+soft336/server.\+cpp\end{DoxyCompactItemize}

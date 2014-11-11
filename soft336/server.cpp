@@ -1,5 +1,10 @@
 #include "server.h"
 
+/**
+ * @brief Server::Server default constructor for the server.
+ * @param clients pointer to the clients object we will read from when sending to clients.
+ * @param parent the parent object.
+ */
 Server::Server(ClientList *clients, QObject *parent)
     : QObject(parent),
       socket(new QUdpSocket(this))
@@ -36,6 +41,10 @@ Server::~Server()
     delete clientList;
 }
 
+/**
+ * @brief Server::writeDatagram write audio datagram(s) to all clients (excluding this one).
+ * @param data audio data to send.
+ */
 void Server::writeDatagram(QByteArray data)
 {
     if (socket) {
@@ -50,15 +59,18 @@ void Server::writeDatagram(QByteArray data)
         QByteArray compressed = qCompress(block);
 
         //send to all connected clients
-        for (int i = 0; i < clientList->getSize(); i++) {
+        for (int i = 0; i < clientList->rowCount(); i++) {
             QHostAddress sendTo = clientList->getAddressAt(clientList->index(i, 0));
             if(sendTo != serverIP) {
-                qDebug() << "audio sent: " << socket->writeDatagram(compressed, sendTo, UDP_PORT) << " to: " << sendTo.toString();
+                socket->writeDatagram(compressed, sendTo, UDP_PORT);
             }
         }
     }
 }
 
+/**
+ * @brief Server::sendUpdate sends an update broadcast, informing clients of our status.
+ */
 void Server::sendUpdate()
 {
     if (socket) {
@@ -75,6 +87,10 @@ void Server::sendUpdate()
     }
 }
 
+/**
+ * @brief Server::updateBroadcast updates the outgoing broadcast message.
+ * @param data string containing broadcast status update.
+ */
 void Server::updateBroadcast(QString data)
 {
     //make changes to the control string here
@@ -92,21 +108,35 @@ void Server::updateBroadcast(QString data)
     }
 }
 
+/**
+ * @brief Server::startAudioSend initiates the audio device.
+ */
 void Server::startAudioSend()
 {
     input->startAudio();
 }
 
+/**
+ * @brief Server::endAudioSend stops the audio device.
+ */
 void Server::endAudioSend()
 {
     input->stopAudio();
 }
 
+/**
+ * @brief Server::setVolume sets the volume of the input device.
+ * @param volume the audio to set.
+ */
 void Server::setVolume(float volume)
 {
     input->setVolume(volume);
 }
 
+/**
+ * @brief Server::changeDevice changes the audio device.
+ * @param devinfo the audio device to change too.
+ */
 void Server::changeDevice(QAudioDeviceInfo devinfo)
 {
     input->changeDevice(devinfo);

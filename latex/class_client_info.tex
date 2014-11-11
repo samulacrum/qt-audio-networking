@@ -1,0 +1,106 @@
+\hypertarget{class_client_info}{\section{Client\+Info Class Reference}
+\label{class_client_info}\index{Client\+Info@{Client\+Info}}
+}
+
+
+The \hyperlink{class_client_info}{Client\+Info} class, holds client I\+P address, and a timeout timer.  
+
+
+
+
+{\ttfamily \#include $<$model.\+h$>$}
+
+Inheritance diagram for Client\+Info\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_client_info}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_client_info_a2c4800d43a301e2735b468a7a77f8932}{void {\bfseries client\+Timeout} (Q\+String c\+Address)}\label{class_client_info_a2c4800d43a301e2735b468a7a77f8932}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_client_info_a11c68fac6d389a2ad23fcb38452414d3}{Client\+Info} (Q\+Object $\ast$parent, Q\+String client\+Address)
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_client_info_a11c68fac6d389a2ad23fcb38452414d3}{Client\+Info\+::\+Client\+Info} default constructor for \hyperlink{class_client_info}{Client\+Info}. \end{DoxyCompactList}\item 
+\hypertarget{class_client_info_a8dd4595978e5ff522b265f8b69dda437}{void \hyperlink{class_client_info_a8dd4595978e5ff522b265f8b69dda437}{restart\+Timer} ()}\label{class_client_info_a8dd4595978e5ff522b265f8b69dda437}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_client_info_a8dd4595978e5ff522b265f8b69dda437}{Client\+Info\+::restart\+Timer} restarts a timer for a client. \end{DoxyCompactList}\item 
+Q\+String \hyperlink{class_client_info_af84ec371c9c598a9fb8aee80ff951644}{get\+Address} () const 
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_client_info_af84ec371c9c598a9fb8aee80ff951644}{Client\+Info\+::get\+Address} get a clients I\+P address. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_client_info_ac8f77925933a5106abde8bec8bf17ade}{bool {\bfseries is\+Listening}}\label{class_client_info_ac8f77925933a5106abde8bec8bf17ade}
+
+\item 
+\hypertarget{class_client_info_a0cc5a8085094d51b3b7225f39cea1ceb}{bool {\bfseries is\+Broadcasting}}\label{class_client_info_a0cc5a8085094d51b3b7225f39cea1ceb}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_client_info_ada8a34df7cdad6456e11499ba4d147e2}{void \hyperlink{class_client_info_ada8a34df7cdad6456e11499ba4d147e2}{timer\+Expired} ()}\label{class_client_info_ada8a34df7cdad6456e11499ba4d147e2}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_client_info_ada8a34df7cdad6456e11499ba4d147e2}{Client\+Info\+::timer\+Expired} called when timeout timer expires, informs the model. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_client_info_adae644f06d9b9db0b24e0a95eba7988a}{Q\+Timer $\ast$ {\bfseries timer}}\label{class_client_info_adae644f06d9b9db0b24e0a95eba7988a}
+
+\item 
+\hypertarget{class_client_info_a9edb182997bc69d43600172d9679286a}{Q\+String {\bfseries address}}\label{class_client_info_a9edb182997bc69d43600172d9679286a}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_client_info}{Client\+Info} class, holds client I\+P address, and a timeout timer. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_client_info_a11c68fac6d389a2ad23fcb38452414d3}{\index{Client\+Info@{Client\+Info}!Client\+Info@{Client\+Info}}
+\index{Client\+Info@{Client\+Info}!Client\+Info@{Client\+Info}}
+\subsubsection[{Client\+Info}]{\setlength{\rightskip}{0pt plus 5cm}Client\+Info\+::\+Client\+Info (
+\begin{DoxyParamCaption}
+\item[{Q\+Object $\ast$}]{parent, }
+\item[{Q\+String}]{client\+Address}
+\end{DoxyParamCaption}
+)}}\label{class_client_info_a11c68fac6d389a2ad23fcb38452414d3}
+
+
+\hyperlink{class_client_info_a11c68fac6d389a2ad23fcb38452414d3}{Client\+Info\+::\+Client\+Info} default constructor for \hyperlink{class_client_info}{Client\+Info}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & the parent object. \\
+\hline
+{\em client\+Address} & the client I\+P address. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_client_info_af84ec371c9c598a9fb8aee80ff951644}{\index{Client\+Info@{Client\+Info}!get\+Address@{get\+Address}}
+\index{get\+Address@{get\+Address}!Client\+Info@{Client\+Info}}
+\subsubsection[{get\+Address}]{\setlength{\rightskip}{0pt plus 5cm}Q\+String Client\+Info\+::get\+Address (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_client_info_af84ec371c9c598a9fb8aee80ff951644}
+
+
+\hyperlink{class_client_info_af84ec371c9c598a9fb8aee80ff951644}{Client\+Info\+::get\+Address} get a clients I\+P address. 
+
+\begin{DoxyReturn}{Returns}
+string containing clients I\+P address 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+soft336/model.\+h\item 
+soft336/model.\+cpp\end{DoxyCompactItemize}

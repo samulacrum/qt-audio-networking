@@ -1,5 +1,9 @@
 #include "client.h"
 
+/**
+ * @brief Client::Client Default constructor for client.
+ * @param parent the Parent Object
+ */
 Client::Client(QObject *parent)
     : QObject(parent),
       output(new AudioOutput(this)),
@@ -16,6 +20,9 @@ Client::~Client()
     delete output;
 }
 
+/**
+ * @brief Client::readDatagrams reads datagrams from the socket.
+ */
 void Client::readDatagrams()
 {
     while (socket->hasPendingDatagrams()) {
@@ -47,16 +54,26 @@ void Client::readDatagrams()
     }
 }
 
+/**
+ * @brief Client::endListen sets listen bool to false; stops writing audio to the device.
+ */
 void Client::endListen()
 {
     listen = false;
 }
 
+/**
+ * @brief Client::startListen sets listen bool to true; starts writing audio to the device.
+ */
 void Client::startListen()
 {
     listen = true;
 }
 
+/**
+ * @brief Client::setVolume sets the volume of the device.
+ * @param volume the volume to set.
+ */
 void Client::setVolume(float volume)
 {
     output->setVolume(volume);

@@ -14,9 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     getDeviceInfo(); //read available input devices
 
     //start server
-    //QAudioDeviceInfo devinfo = ui->deviceComboBox->itemData(ui->deviceComboBox->currentIndex()).value<QAudioDeviceInfo>();
     server = new Server(clients);
-    //server->changeDevice(devinfo);
     connect(this, SIGNAL(startAudio()), server, SLOT(startAudioSend()));
     connect(this, SIGNAL(endAudio()), server, SLOT(endAudioSend()));
     connect(this, SIGNAL(sendControlString(QString)), server, SLOT(updateBroadcast(QString)));
