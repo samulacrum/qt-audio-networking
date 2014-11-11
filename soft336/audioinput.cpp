@@ -1,6 +1,8 @@
 #include "audioinput.h"
 
-AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(parent)
+AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent)
+    : QObject(parent),
+      sendAudio(false)
 {
     format.setChannelCount(1);
     format.setSampleRate(SAMPLE_RATE);
@@ -16,9 +18,6 @@ void AudioInput::changeDevice(QAudioDeviceInfo devinfo)
 {
     audio->stop();
     delete audio;
-
-    //device->close();
-    //device->disconnect(this);
     startDevice(devinfo);
 }
 
@@ -32,22 +31,24 @@ void AudioInput::startDevice(QAudioDeviceInfo devinfo)
 
 void AudioInput::readyRead()
 {
-    QByteArray buffer;
+    if(sendAudio) {
+        QByteArray buffer;
 
-    //Check the number of samples in input buffer
-    qint64 len = audio->bytesReady();
-    qint64 l;
+        //Check the number of samples in input buffer
+        qint64 len = audio->bytesReady();
+        qint64 l;
 
-    if(len > AUDIO_BUFFER_SIZE)
-        len = AUDIO_BUFFER_SIZE;
+        if(len > AUDIO_BUFFER_SIZE)
+            len = AUDIO_BUFFER_SIZE;
 
-    //Read sound samples from input device to buffer
-    if (len > 0) {
-        buffer.resize(len);
-        l = device->read(buffer.data(), len);
-        //ensures we only send data if there is actual data to send
-        if (l > 0) {
-            emit dataReady(buffer);
+        //Read sound samples from input device to buffer
+        if (len > 0) {
+            buffer.resize(len);
+            l = device->read(buffer.data(), len);
+            //ensures we only send data if there is actual data to send
+            if (l > 0) {
+                emit dataReady(buffer);
+            }
         }
     }
 }
@@ -57,3 +58,12 @@ void AudioInput::setVolume(float volume)
     audio->setVolume(volume);
 }
 
+void AudioInput::startAudio()
+{
+    sendAudio = true;
+}
+
+void AudioInput::stopAudio()
+{
+    sendAudio = false;
+}

@@ -94,12 +94,12 @@ void Server::updateBroadcast(QString data)
 
 void Server::startAudioSend()
 {
-
+    input->startAudio();
 }
 
 void Server::endAudioSend()
 {
-
+    input->stopAudio();
 }
 
 void Server::setVolume(float volume)

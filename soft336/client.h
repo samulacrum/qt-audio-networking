@@ -28,8 +28,8 @@ private slots:
     void readDatagrams();
 
 private:
-    QUdpSocket *socket;
     AudioOutput *output;
+    QUdpSocket *socket;
     bool listen;
 };
 

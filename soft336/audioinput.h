@@ -18,6 +18,8 @@ public:
     void changeDevice(QAudioDeviceInfo devinfo);
     void startDevice(QAudioDeviceInfo devinfo);
     void setVolume(float volume);
+    void startAudio();
+    void stopAudio();
 
 signals:
     void dataReady(QByteArray data);
@@ -31,6 +33,7 @@ private:
     QAudioInput *audio;
     QIODevice *device; //equivalent to audioinfo
     QAudioFormat format;
+    bool sendAudio;
 };
 
 #endif // AUDIOINPUT_H
