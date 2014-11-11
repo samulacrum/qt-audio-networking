@@ -22,13 +22,17 @@ Server::Server(ClientList *clients, QObject *parent)
     QList<QNetworkAddressEntry> laddr = ninter.addressEntries();
     qDebug() << "Server IP: " << laddr.at(1).ip() << endl;
     serverIP = laddr.at(1).ip();
+
+    //initialise with default device
+    input = new AudioInput(QAudioDeviceInfo::defaultInputDevice(), this);
+    connect(input, SIGNAL(dataReady(QByteArray)), this, SLOT(writeDatagram(QByteArray)));
 }
 
 Server::~Server()
 {
     delete socket;
     delete broadcastTimer;
-    //if (input) delete input;
+    delete input;
     delete clientList;
 }
 
@@ -90,15 +94,12 @@ void Server::updateBroadcast(QString data)
 
 void Server::startAudioSend()
 {
-    //initiate audio device
-    input = new AudioInput(devinfo, this);
-    connect(input, SIGNAL(dataReady(QByteArray)), this, SLOT(writeDatagram(QByteArray)));
+
 }
 
 void Server::endAudioSend()
 {
-    if (input)
-        delete input;
+
 }
 
 void Server::setVolume(float volume)
@@ -108,5 +109,5 @@ void Server::setVolume(float volume)
 
 void Server::changeDevice(QAudioDeviceInfo devinfo)
 {
-    this->devinfo = devinfo;
+    input->changeDevice(devinfo);
 }

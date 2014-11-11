@@ -2,7 +2,6 @@
 
 AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(parent)
 {
-    QAudioFormat format;
     format.setChannelCount(1);
     format.setSampleRate(SAMPLE_RATE);
     format.setSampleSize(SAMPLE_SIZE);
@@ -10,10 +9,24 @@ AudioInput::AudioInput(QAudioDeviceInfo devinfo, QObject *parent) : QObject(pare
     format.setByteOrder(QAudioFormat::LittleEndian);
     format.setSampleType(QAudioFormat::SignedInt);
 
+    startDevice(devinfo);
+}
+
+void AudioInput::changeDevice(QAudioDeviceInfo devinfo)
+{
+    audio->stop();
+    delete audio;
+
+    //device->close();
+    //device->disconnect(this);
+    startDevice(devinfo);
+}
+
+void AudioInput::startDevice(QAudioDeviceInfo devinfo)
+{
     audio = new QAudioInput(devinfo, format, this);
     audio->setBufferSize(AUDIO_BUFFER_SIZE);
     device = audio->start();
-
     connect(device, SIGNAL(readyRead()), this, SLOT(readyRead()));
 }
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>391</width>
-    <height>442</height>
+    <width>321</width>
+    <height>360</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
    <widget class="QPushButton" name="listenButton">
     <property name="geometry">
      <rect>
-      <x>156</x>
+      <x>200</x>
       <y>160</y>
       <width>115</width>
       <height>32</height>
@@ -43,10 +43,10 @@
    <widget class="QSlider" name="outputVolumeControl">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>300</y>
+      <x>170</x>
+      <y>250</y>
       <width>141</width>
-      <height>31</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="value">
@@ -59,9 +59,9 @@
    <widget class="QComboBox" name="deviceComboBox">
     <property name="geometry">
      <rect>
-      <x>116</x>
-      <y>260</y>
-      <width>151</width>
+      <x>170</x>
+      <y>220</y>
+      <width>141</width>
       <height>26</height>
      </rect>
     </property>
@@ -72,7 +72,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>156</x>
+      <x>200</x>
       <y>190</y>
       <width>115</width>
       <height>32</height>
@@ -120,21 +120,24 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>260</y>
-      <width>91</width>
+      <x>50</x>
+      <y>220</y>
+      <width>101</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
      <string>Input Device:</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
    </widget>
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>8</x>
-      <y>310</y>
+      <x>50</x>
+      <y>250</y>
       <width>101</width>
       <height>20</height>
      </rect>
@@ -142,27 +145,33 @@
     <property name="text">
      <string>Output Volume:</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
    </widget>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>8</x>
-      <y>340</y>
-      <width>81</width>
+      <x>50</x>
+      <y>280</y>
+      <width>101</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
      <string>Mic Volume:</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
    </widget>
    <widget class="QSlider" name="inputVolumeControl">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>330</y>
+      <x>170</x>
+      <y>280</y>
       <width>141</width>
-      <height>31</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="value">
@@ -177,7 +186,7 @@
      <rect>
       <x>10</x>
       <y>20</y>
-      <width>371</width>
+      <width>301</width>
       <height>131</height>
      </rect>
     </property>
@@ -188,7 +197,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>391</width>
+     <width>321</width>
      <height>22</height>
     </rect>
    </property>

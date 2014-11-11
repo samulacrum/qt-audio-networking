@@ -32,6 +32,8 @@ uses QTs datastream to serialise the audio information. (based from the QDataStr
 
 Phonon was considered, but deemed inappropriate (not very cross comptiable), and instead uses QTMultimedia librarys.
 
+Tested for memory leaks.
+
 caveats
 =======
 
@@ -51,7 +53,5 @@ to-do
 add a lot of error checking
 write documentation, using doxygen.
 
-***move client list into mainthread ***
-***clientlist needs a look at***
-***make table update on client list update***
-
+***check for memory leaks***
+***fix memory leaks in audio input ***

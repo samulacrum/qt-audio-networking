@@ -12,8 +12,8 @@ Client::Client(QObject *parent)
 
 Client::~Client()
 {
-    if (socket) delete socket;
-    if (output) delete output;
+    delete socket;
+    delete output;
 }
 
 void Client::readDatagrams()

@@ -15,6 +15,8 @@ class AudioInput : public QObject
     Q_OBJECT
 public:
     explicit AudioInput(QAudioDeviceInfo devinfo, QObject *parent = 0);
+    void changeDevice(QAudioDeviceInfo devinfo);
+    void startDevice(QAudioDeviceInfo devinfo);
     void setVolume(float volume);
 
 signals:
@@ -27,7 +29,8 @@ private slots:
 
 private:
     QAudioInput *audio;
-    QIODevice *device;
+    QIODevice *device; //equivalent to audioinfo
+    QAudioFormat format;
 };
 
 #endif // AUDIOINPUT_H
