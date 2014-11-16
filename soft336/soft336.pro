@@ -30,5 +30,4 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui
 
-OTHER_FILES += \
-    notes.txt
+OTHER_FILES +=
