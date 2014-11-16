@@ -19,14 +19,15 @@ Server::Server(ClientList *clients, QObject *parent)
     connect (broadcastTimer, SIGNAL(timeout()), this, SLOT(sendUpdate()));
     broadcastTimer->start(200);
 
-    //get our IP address
-    QNetworkConfigurationManager mgr;
-    QNetworkConfiguration nconfig = mgr.defaultConfiguration();
-    QNetworkSession session ( nconfig );
-    QNetworkInterface ninter = session.interface();
-    QList<QNetworkAddressEntry> laddr = ninter.addressEntries();
-    qDebug() << "Server IP: " << laddr.at(1).ip() << endl;
-    serverIP = laddr.at(1).ip();
+    //get our local IP
+    foreach (const QHostAddress &address, QNetworkInterface::allAddresses()) {
+        if (address.protocol() == QAbstractSocket::IPv4Protocol && address != QHostAddress(QHostAddress::LocalHost)) {
+            if(address.toString().section(".", -1, -1) != "1") {
+                qDebug() << address.toString();
+                serverIP = QHostAddress(address);
+            }
+        }
+    }
 
     //initialise with default device
     input = new AudioInput(QAudioDeviceInfo::defaultInputDevice(), this);
